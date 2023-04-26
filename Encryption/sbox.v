@@ -1,4 +1,4 @@
-module sbox (
+module SBox (
     input wire [7:0] in_toSub,
     output wire [7:0] out_Subed
 );

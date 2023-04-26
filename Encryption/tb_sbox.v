@@ -1,25 +1,23 @@
-`include "sbox.v"
+`include "SBox.v"
 
-module tb_sbox ();
+module tb_SBox ();
     reg [7:0] in_toSub_tb;
     wire [7:0] out_Subed_tb;
 
-    sbox ob1(.in_toSub(in_toSub_tb), .out_Subed(out_Subed_tb));
+    SBox ob1(.in_toSub(in_toSub_tb), .out_Subed(out_Subed_tb));
 
     localparam period = 10;
 
     initial begin
-        $dumpfile("tb_sbox.vcd");
-        $dumpvars(0, tb_sbox);
+        $dumpfile("tb_SBox.vcd");
+        $dumpvars(0, tb_SBox);
 
-        in_toSub_tb = 8'h8b; #period;
-        in_toSub_tb = 8'ha5; #period;
-        in_toSub_tb = 8'hcb; #period;
-        in_toSub_tb = 8'h42; #period;
-        in_toSub_tb = 8'h9f; #period;
-        in_toSub_tb = 8'h10; #period;
-        in_toSub_tb = 8'h16; #period;
-        in_toSub_tb = 8'hce; #period;
-        in_toSub_tb = 8'hf3; #period;
+        for (in_toSub_tb = 8'd0; in_toSub_tb <= 8'hff ; in_toSub_tb = in_toSub_tb + 1 ) begin
+            #period;
+        end
+    end
+
+    initial begin
+        # (257*period) $finish;
     end
 endmodule

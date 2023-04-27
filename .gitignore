@@ -1,0 +1,2 @@
+// ignores verilog output files
+*.v.out

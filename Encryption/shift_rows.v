@@ -1,7 +1,7 @@
 /*
   *
   * Module: shift_rows
-  * Description: Shifts the rows of the state matrix
+  * Description: Shifts the rows of the state matrix to the left
   * 
   * Inputs:
   *  i_state[127:0] - The state matrix

@@ -72,3 +72,71 @@ module amazing_module (
   // amazing stuff
 endmodule
 ```
+
+- Abbreviations used in a module must be documented and uncommon abbreviations should be avoided.
+
+## 🦴 Code Layout
+### Indentation
+Use 4 spaces for indentation
+
+### `begin` and `end`
+- `begin` goes on the same line as the first statement of the block it belongs to
+- `end` goes on a new line
+
+```Verilog
+always @(posedge i_clk) begin
+  if (i_en) begin
+    data <= i_data;
+  end
+end
+```
+
+### `if` and `else`
+- `else` starts a new line
+```Verilog
+if (i_en) begin
+  data <= i_data;
+end 
+else begin
+  data <= 0;
+end
+```
+- always use `begin` and `end` even if there is only one statement in the block
+```Verilog
+if (i_en) begin
+  data <= i_data;
+end 
+else begin
+  data <= 0;
+end
+```
+
+## 📝 Comments
+### Docstring
+- Every module should have a docstring (a comment describing the module)
+- provides a high level description of what the code in that file does
+
+```Verilog
+
+/*
+  *
+  * Module: amazing_module
+  * Description: This module does amazing stuff
+  * 
+  * Inputs:
+  *   i_clk: clock
+  *   i_data: data
+  *   i_en: enable
+  * Outputs:
+  *   o_flag: flag
+  *   o_data: data
+  *
+  * Author: Amazing Author
+  * Date: 18/4/2003
+*/
+
+```
+
+
+### 🖊️ For More Read this guide line:
+[📖 Verilog Style Guide](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)

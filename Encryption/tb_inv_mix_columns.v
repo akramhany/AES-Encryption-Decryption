@@ -1,3 +1,12 @@
+/*
+   *
+   * Module: tb_inv_mix_columns
+   * Description: This module tests the inverse mix columns operation on the input state of AES encryption.
+   * Inputs: N/A
+   * Outputs: N/A
+   * Author: Adham Hussin
+   * Date: 27/4/2003 
+*/
 `include "inv_mix_columns.v"
 module tb_inv_mix_columns;
 

@@ -30,7 +30,7 @@ endfunction
 
 genvar i;
 generate
-	for (i = 15; i > -1; i = i - 1) begin //traversing on each word 
+	for (i = 15; i > -1; i = i - 1) begin //traversing on each byte 
         assign o_state[(i*8 + 7) : i*8] =   (i%4 == 3) ?  i_state[i/4 *32 + 7: i/4 *32] ^ i_state[i/4 *32 +15: i/4 *32 + 8] ^ by3(i_state[i/4 *32 +23: i/4 *32 + 16]) ^ by2(i_state[i/4 *32 +31: i/4 *32 + 24]): //if i in 1st row
                                             (i%4 == 2) ?  i_state[i/4 *32 + 7: i/4 *32] ^ by3(i_state[i/4 *32 +15: i/4 *32 + 8]) ^ by2(i_state[i/4 *32 +23: i/4 *32 + 16]) ^ i_state[i/4 *32 +31: i/4 *32 + 24]: //        2nd row
                                             (i%4 == 1) ?  by3(i_state[i/4 *32 + 7: i/4 *32]) ^ by2(i_state[i/4 *32 +15: i/4 *32 + 8]) ^ i_state[i/4 *32 +23: i/4 *32 + 16] ^ i_state[i/4 *32 +31: i/4 *32 + 24]: //        3rd row

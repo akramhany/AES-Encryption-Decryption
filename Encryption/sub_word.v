@@ -12,6 +12,8 @@
   * Date: 2023-4-28
   *
 */
+`include "sbox.v"
+
 module sub_word(
   input [31:0] i_word,
   output [31:0] o_word
@@ -20,27 +22,27 @@ module sub_word(
   // Instantiate the S-Box module 4 times
 
   // 1st byte substitution
-  s_box s_box_inst(
-    .i_byte(i_word[7:0]),
-    .o_byte(o_word[7:0])
+  SBox sbox_inst(
+    .in_toSub(i_word[7:0]),
+    .out_Subed(o_word[7:0])
   );
 
   // 2nd byte substitution
-  s_box s_box_inst1(
-    .i_byte(i_word[15:8]),
-    .o_byte(o_word[15:8])
+  SBox sbox_inst1(
+    .in_toSub(i_word[15:8]),
+    .out_Subed(o_word[15:8])
   );
 
   // 3rd byte substitution
-  s_box s_box_inst2(
-    .i_byte(i_word[23:16]),
-    .o_byte(o_word[23:16])
+  SBox sbox_inst2(
+    .in_toSub(i_word[23:16]),
+    .out_Subed(o_word[23:16])
   );
-  
+
   // 4th byte substitution
-  s_box s_box_inst3(
-    .i_byte(i_word[31:24]),
-    .o_byte(o_word[31:24])
+  SBox sbox_inst3(
+    .in_toSub(i_word[31:24]),
+    .out_Subed(o_word[31:24])
   );
 
 endmodule

@@ -138,5 +138,11 @@ end
 ```
 
 
-### 🖊️ For More Read this guide line:
+## 🖊️ For More Read this guide line:
 [📖 Verilog Style Guide](https://github.com/lowRISC/style-guides/blob/master/VerilogCodingStyle.md)
+
+## 🔥 Coding Conventions
+- For state Matrix, we use this convention:
+![STATE MATRIX](imgs/state_matrix.png)
+- for this declration:
+![STATE DECLARATIONS](imgs/state_declration.png)

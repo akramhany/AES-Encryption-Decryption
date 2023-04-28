@@ -17,3 +17,9 @@ module rot_word
 assign o_word = {i_word[23:0],i_word[31:24]};
 
 endmodule
+
+/* --Alternative Function--
+function [31:0] rot_word (input [31:0] i_word); 
+    rot_word = {i_word[23:0],i_word[31:24]};
+endfunction
+*/

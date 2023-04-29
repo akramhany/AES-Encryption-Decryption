@@ -1,9 +1,77 @@
-module SBox (
-    input wire [7:0] in_toSub,
-    output wire [7:0] out_Subed
+/*
+   *
+   * Module: key_expansion
+   * Description: The module responsible for expanding a given key.
+   * Inputs:
+   *     NK: a constant that represents the number of words in a single key (by default equal 4)
+   *     NR: a constant that represents the number of rounds done to expand the key
+   *     i_cypher_key: the given key with size of (32*NK) bit
+   * Outputs:
+   *     o_expanded_key: the key after expansion and its size is (4 * (NR + 1) * 32) bit
+   * Author: Akram
+   * Date: 29/4/2023 
+*/
+
+module key_expansion #(
+    parameter NK = 4,
+    parameter NR = 10
+    ) 
+(
+    i_cypher_key,
+    o_expanded_key
 );
-    
-    assign out_Subed = (in_toSub == 8'h00) ? 8'h63 :
+
+input wire [(32 * NK) - 1 : 0] i_cypher_key;
+output reg [(4 * (NR + 1) * 32) - 1 : 0] o_expanded_key;
+
+reg [31:0] temp1, temp2, temp3, temp4, temp5, temp6;    //temp variables used in the operation of expanding the key
+
+integer i;
+
+always @(*) begin
+    o_expanded_key = i_cypher_key;                      //assign the cypher key to the first N bits of the expanded key (N is the size of the cypher key)
+
+    for (i = NK; i < 4 * (NR + 1); i = i + 1) begin     //loop for the number of words generated in the expanded key
+
+        temp1 = o_expanded_key[31:0];                   //get the last word in the expanded key (the word number i - 1)
+        o_expanded_key = o_expanded_key << 32;          //shift all the bits of the expanded key to the left by 32 bit
+
+        if (i % NK == 0) begin                          //condition to check if the required word for this iteration is the word[0] in this key
+ 
+            //the steps required to generate the word number i
+            temp2 = rot_word(temp1);            
+            temp3 = sub_word(temp2);           
+            temp4 = rcon(i / NK);
+            temp5 = temp3 ^ temp4;
+            temp6 = o_expanded_key[((NK + 1) * 32) - 1 : (NK * 32)];
+            o_expanded_key[31:0] = temp5 ^ temp6;
+
+        end 
+
+        else if (NK > 6 && i % NK == 4) begin            //if we are expanding the 256 bit key
+
+            temp5 = sub_word(temp1);
+            temp6 = o_expanded_key[((NK + 1) * 32) - 1 : (NK * 32)];
+            o_expanded_key[31:0] = temp5 ^ temp6;
+
+        end
+
+        else begin
+
+        temp6 = o_expanded_key[((NK + 1) * 32) - 1 : (NK * 32)];
+        o_expanded_key[31:0] = temp1 ^ temp6;
+        
+        end
+
+    end
+end
+
+//the sbox function
+function [7:0] SBox (
+    input [7:0] in_toSub
+);
+begin  
+    SBox = (in_toSub == 8'h00) ? 8'h63 :
                        (in_toSub == 8'h01) ? 8'h7c :
                        (in_toSub == 8'h02) ? 8'h77 :
                        (in_toSub == 8'h03) ? 8'h7b :
@@ -276,4 +344,55 @@ module SBox (
                        (in_toSub == 8'hff) ? 8'h16 :
                        8'bxxxxxxxx;
                        //row 16 of index f
+end 
+endfunction
+
+//the round constant function
+function [31:0] rcon (
+    input [3:0]  i_round_number
+);
+begin
+    rcon = 32'd0;
+    rcon [31:24] = (i_round_number == 4'd1 ) ? 8'h01:
+                   (i_round_number == 4'd2 ) ? 8'h02:
+                   (i_round_number == 4'd3 ) ? 8'h04:
+                   (i_round_number == 4'd4 ) ? 8'h08:
+                   (i_round_number == 4'd5 ) ? 8'h10:
+                   (i_round_number == 4'd6 ) ? 8'h20:
+                   (i_round_number == 4'd7 ) ? 8'h40:
+                   (i_round_number == 4'd8 ) ? 8'h80:
+                   (i_round_number == 4'd9 ) ? 8'h1b:
+                   (i_round_number == 4'd10) ? 8'h36:
+                   8'bxxxxxxxx;
+end
+endfunction
+
+//the function responsible for rotating the word
+function [31:0] rot_word (
+    input [31:0] i_word
+);
+begin 
+    rot_word = {i_word[23:0],i_word[31:24]};
+end 
+endfunction
+
+//the function responsible for subs a given word from the sbox 
+function  [31:0] sub_word (
+    input [31:0] i_word
+);
+begin 
+    sub_word[7:0] = SBox(i_word[7:0]);
+
+  // 2nd byte substitution
+   sub_word[15:8] = SBox(i_word[15:8]);
+
+  // 3rd byte substitution
+   sub_word[23:16] = SBox(i_word[23:16]);
+
+  // 4th byte substitution
+   sub_word[31:24] = SBox(i_word[31:24]);
+end
+endfunction
+
+
 endmodule

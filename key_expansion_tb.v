@@ -15,6 +15,8 @@ wire [1407 : 0] o_expanded_key_1;
 reg [255 : 0] i_cypher_key_3;
 wire [1919 : 0] o_expanded_key_3;
 
+reg [255 : 0] i_cypher_key_4;
+wire [1919 : 0] o_expanded_key_4;
 
 
 key_expansion #(.NK(4), .NR(10)) ke1 (
@@ -27,12 +29,17 @@ key_expansion #(.NK(8), .NR(14)) ke3 (
     .o_expanded_key(o_expanded_key_3)
 );
 
+key_expansion #(.NK(8), .NR(14)) ke4 (
+    .i_cypher_key(i_cypher_key_4),
+    .o_expanded_key(o_expanded_key_4)
+);
 
 
 initial begin
 
     i_cypher_key_1 = 128'h2b7e151628aed2a6abf7158809cf4f3c;
     i_cypher_key_3 = 256'h603deb1015ca71be2b73aef0857d77811f352c073b6108d72d9810a30914dff4;
+    i_cypher_key_4 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
 
     #100;
     $display("Testcase 0");
@@ -57,6 +64,19 @@ initial begin
     end
     else begin
       $display("Testcase 1 PASSED");
+    end
+
+    $display("=================================================");
+
+    $display("Testcase 2");
+    $display("Input:           %h", i_cypher_key_4);
+    $display("Expected Output: %h", 1920'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1fa573c29fa176c498a97fce93a572c09c1651a8cd0244beda1a5da4c10640badeae87dff00ff11b68a68ed5fb03fc15676de1f1486fa54f9275f8eb5373b8518dc656827fc9a799176f294cec6cd5598b3de23a75524775e727bf9eb45407cf390bdc905fc27b0948ad5245a4c1871c2f45f5a66017b2d387300d4d33640a820a7ccff71cbeb4fe5413e6bbf0d261a7dff01afafee7a82979d7a5644ab3afe6402541fe719bf500258813bbd55a721c0a4e5a6699a9f24fe07e572baacdf8cdea24fc79ccbf0979e9371ac23c6d68de36);
+    $display("Got:             %h", o_expanded_key_4);
+    if (o_expanded_key_4 != 1920'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1fa573c29fa176c498a97fce93a572c09c1651a8cd0244beda1a5da4c10640badeae87dff00ff11b68a68ed5fb03fc15676de1f1486fa54f9275f8eb5373b8518dc656827fc9a799176f294cec6cd5598b3de23a75524775e727bf9eb45407cf390bdc905fc27b0948ad5245a4c1871c2f45f5a66017b2d387300d4d33640a820a7ccff71cbeb4fe5413e6bbf0d261a7dff01afafee7a82979d7a5644ab3afe6402541fe719bf500258813bbd55a721c0a4e5a6699a9f24fe07e572baacdf8cdea24fc79ccbf0979e9371ac23c6d68de36) begin
+      $display("Testcase 2 FAILED");
+    end
+    else begin
+      $display("Testcase 2 PASSED");
     end
 
     #10

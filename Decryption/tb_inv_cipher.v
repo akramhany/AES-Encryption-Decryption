@@ -35,7 +35,7 @@ initial begin
     tb_state_2 = 128'h8ea2b7ca516745bfeafc49904b496089;
     tb_cipher_key_2 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
 
-    #100;
+    #10;
     $display("Testcase 0");
     $display("Input text:           %h", tb_state_0);
     $display("Input key :           %h", tb_cipher_key_0);
@@ -83,7 +83,7 @@ initial begin
 end
 
 initial begin
-  #300;
+  #30;
   $finish;
 end
 

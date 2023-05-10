@@ -16,13 +16,14 @@
     * Author: Amir Kedis 
     * Date: 10 - May - 2023 
 */
+
 module slave (
   input reset,
   input sclk,
   input mosi,
   input CS,
-  input SDS,
-  output SDO,
+  input  [7:0] SDS,
+  output [7:0] SDO,
   output MISO
   );
   

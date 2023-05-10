@@ -25,5 +25,13 @@ module master (
   output [7:0] MDO,
   output MOSI
 );
+
+// counter logic for the spi protocol
+reg [3:0] counter = 0; // counts from 0 to 15
+
+always @(posedge sclk) begin
+  counter <= counter + 1;
+end
+
   
 endmodule

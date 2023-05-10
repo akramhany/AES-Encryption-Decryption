@@ -273,7 +273,7 @@ module InvSBox (
                        (in_toSub == 8'hfc) ? 8'h55 :
                        (in_toSub == 8'hfd) ? 8'h21 :
                        (in_toSub == 8'hfe) ? 8'h0c :
-                       (in_toSub == 8'hff) ? 8'h78 :
+                       (in_toSub == 8'hff) ? 8'h7d :
                        8'bxxxxxxxx;
                        //row 16 of index f
 endmodule

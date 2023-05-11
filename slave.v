@@ -94,7 +94,10 @@ always @(*) begin
 end
 
 //////////////////////////////  Output Logic  //////////////////////////////
-assign MISO = (CS == 1'b0) ? miso_data_reg[7] : 1'bz; // if CS is high, then MISO is low
+
+// sends the most significant bit first
+// disonnect the output when CS is high to aloow other slaves to communicate
+assign MISO = (CS == 1'b0) ? miso_data_reg[7] : 1'bz; // if CS is high, then MISO is high impedance
 
 assign mosi_data = mosi_data_reg; // the 1-byte data received from the master
 

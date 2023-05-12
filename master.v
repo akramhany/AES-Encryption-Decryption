@@ -104,10 +104,42 @@ always @(*) begin
       if (start) begin
         state_next = WAIT;
         data_in_next = data_in;
+        cs_next = 1'b0;
       end
     end // IDLE
 
+    WAIT: begin
+      sclk_next = sclk_reg + 1'b1;
+      // next code skips half cycle then goes to transfer state
+      if (sclk_reg == 1'b1) begin
+        state_next = TRANSFER;
+        sclk_next = 1'b0;
+      end
+    end // WAIT
 
+    TRANSFER: begin
+      sclk_next = sclk_reg + 1'b1; // increment the clock
+      // 1. send data at the first half cycle
+      if (sclk == 2'b00) begin
+        mosi_next = data_in_reg[7]; // send the MSB first
+      end
+      // 2. Fallen Edge => read and shift data
+      else if  (sclk == 2'b01) begin
+        data_out_next = {data_out_reg[6:0], miso}; // shift the data
+      end
+      // 3. Rising Edge => Increment counter
+      else if (sclk == 2'b11) begin
+        counter_next = counter_reg + 1'b1; // increment the counter
+
+        // if last bit go to idle state and output the data
+        if (counter_reg == 3'b111) begin
+          state_next = IDLE;
+          data_out_next = data_out_reg;
+          done_next = 1'b1;
+          cs_next = 1'b1;
+        end
+      end
+    end // TRANSFER
 
   endcase
 

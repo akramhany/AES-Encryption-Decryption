@@ -32,12 +32,12 @@ module master (
 
 ////////////////////////////  Local Parameters  //////////////////////////////
 localparam IDLE     = 2'b00; // idle state
-localparam TRANSFER = 2'b01; // send state
-localparam WAIT     = 2'b10; // wait state - Will be used to skip first halh cycle
+localparam WAIT     = 2'b01; // send state
+localparam TRANSFER = 2'b10; // wait state - Will be used to skip first halh cycle
 
 
 ////////////////////////////  Registers  //////////////////////////////
-reg state_reg;                // the current state of the state machine
+reg [1:0] state_reg;                // the current state of the state machine
 reg [7:0] data_in_reg;        // the 1-byte data sent to the slave
 reg [7:0] data_out_reg;       // the 1-byte data received from the slave
 reg [1:0] sclk_reg;           // serial clock Register (clk divider by 2)
@@ -47,7 +47,7 @@ reg done_reg;                 // done signal reg
 reg cs_reg;                   // chip select active low reg
 
 ////////////////////////////  next states  //////////////////////////////
-reg state_next;               // controling the next state logic of the state_reg
+reg [1:0] state_next;               // controling the next state logic of the state_reg
 reg [7:0] data_in_next;       // controling the next state logic of the data_in_reg
 reg [7:0] data_out_next;      // controling the next state logic of the data_out_reg
 reg [1:0] sclk_next;          // controling the next state logic of the sclk_reg
@@ -101,7 +101,7 @@ always @(*) begin
       counter_next = 3'b0;
 
       // if begin go to wait state and register the data
-      if (start) begin
+      if (start == 1'b1) begin
         state_next = WAIT;
         data_in_next = data_in;
         cs_next = 1'b0;
@@ -111,24 +111,25 @@ always @(*) begin
     WAIT: begin
       sclk_next = sclk_reg + 1'b1;
       // next code skips half cycle then goes to transfer state
-      if (sclk_reg == 1'b1) begin
+      if (sclk_reg == 2'b01) begin
         state_next = TRANSFER;
-        sclk_next = 1'b0;
+        sclk_next   = 2'b00;
       end
     end // WAIT
 
     TRANSFER: begin
-      sclk_next = sclk_reg + 1'b1; // increment the clock
+      sclk_next = sclk_reg + 2'b01; // increment the clock
       // 1. send data at the first half cycle
-      if (sclk == 2'b00) begin
+      if (sclk_reg == 2'b00) begin
         mosi_next = data_in_reg[7]; // send the MSB first
       end
       // 2. Fallen Edge => read and shift data
-      else if  (sclk == 2'b01) begin
+      else if  (sclk_reg == 2'b01) begin
+        data_in_next = {data_in_reg[6:0], 1'bz}; // shift the data
         data_out_next = {data_out_reg[6:0], miso}; // shift the data
       end
       // 3. Rising Edge => Increment counter
-      else if (sclk == 2'b11) begin
+      else if (sclk_reg == 2'b11) begin
         counter_next = counter_reg + 1'b1; // increment the counter
 
         // if last bit go to idle state and output the data

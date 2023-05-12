@@ -81,6 +81,38 @@ always @(posedge clk) begin
   end
 end
 
+////////////////////////////  next states logic (Main Process)  //////////////////////////////
+always @(*) begin
+  // default values
+  state_next    = state_reg;
+  data_in_next  = data_in_reg;
+  data_out_next = data_out_reg;
+  sclk_next     = sclk_reg;
+  mosi_next     = mosi_reg;
+  counter_next  = counter_reg;
+  done_next     = 0;
+  cs_next       = cs_reg;
+
+  case (state_reg)
+
+    IDLE: begin
+      // reset values
+      sclk_next = 2'b0;
+      counter_next = 3'b0;
+
+      // if begin go to wait state and register the data
+      if (start) begin
+        state_next = WAIT;
+        data_in_next = data_in;
+      end
+    end // IDLE
+
+
+
+  endcase
+
+end
+
 
 ////////////////////////////  Output Logic  //////////////////////////////
 assign mosi = mosi_reg;       // master output slave input (1-bit)

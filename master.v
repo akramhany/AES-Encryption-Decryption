@@ -13,7 +13,7 @@
 
 module master (
   // Control Signals
-  input reset,      // reset the state of the master
+  input reset,      // reset the state of the master (active high)
   input clk,        // clock (from FPGA)
   input start,      // start the state machine
   output buzy,      // busy signal indicates transmistion not finished (1-bit)
@@ -44,6 +44,7 @@ reg [1:0] sclk_reg;           // serial clock Register (clk divider by 2)
 reg mosi_reg;                 // master output slave input Register (1-bit)
 reg [2:0] counter_reg;        // counter to count the number of bits sent/received
 reg done_reg;                 // done signal reg
+reg cs_reg;                   // chip select active low reg
 
 ////////////////////////////  next states  //////////////////////////////
 reg state_next;               // controling the next state logic of the state_reg
@@ -53,7 +54,32 @@ reg [1:0] sclk_next;          // controling the next state logic of the sclk_reg
 reg mosi_next;                // controling the next state logic of the mosi_reg
 reg [2:0] counter_next;       // controling the next state logic of the counter_reg
 reg done_next;                // controling the next state logic of the done_reg
+reg cs_next;                  // controling the next state logic of the cs_reg
 
+////////////////////////////  Memory (Flip-Flop)  //////////////////////////////
+always @(posedge clk) begin
+  if (reset) begin        // Reset is active high
+    // Reset Values
+    state_reg     <= IDLE;
+    data_in_reg   <= 8'b0;
+    data_out_reg  <= 8'b0;
+    sclk_reg      <= 2'b0;
+    mosi_reg      <= 1'b0;
+    counter_reg   <= 3'b0;
+    done_reg      <= 1'b0;
+    cs_reg        <= 1'b1;
+  end
+  else begin
+    state_reg     <= state_next;
+    data_in_reg   <= data_in_next;
+    data_out_reg  <= data_out_next;
+    sclk_reg      <= sclk_next;
+    mosi_reg      <= mosi_next;
+    counter_reg   <= counter_next;
+    done_reg      <= done_next;
+    cs_reg        <= cs_next;
+  end
+end
 
 
 ////////////////////////////  Output Logic  //////////////////////////////
@@ -63,6 +89,6 @@ assign sclk = ~sclk_reg[1] & (state_reg == TRANSFER);     // serial clock (1-bit
 assign buzy = (state_reg != IDLE);  // busy is high if state is transfer or wait
 assign data_out = data_out_reg;
 assign done = done_reg;    
-
+assign cs = cs_reg;           // chip select active low
 
 endmodule

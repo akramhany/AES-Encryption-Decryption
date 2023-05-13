@@ -26,6 +26,7 @@ reg reset;
 reg start;
 wire buzy;
 wire done;
+wire slave_done;
 reg [7:0] data_in;
 wire [7:0] data_out;
 wire cs;
@@ -50,20 +51,22 @@ master dut (
 
 
 
-reg [7:0] miso_data;
-wire [7:0] mosi_data;
+reg [7:0] slave_data_in;
+wire [7:0] slave_data_out;
 
 //////////////////////////////
 //       DUT INSTANCES      //
 //////////////////////////////
-slave dut2 (
+slave slave_dut (
   .reset(reset),
+  .clk(clk),
+  .cs(cs),
+  .mosi(mosi),
+  .miso(miso),
   .sclk(sclk),
-  .MOSI(mosi),
-  .CS(cs),
-  .miso_data(miso_data),
-  .MISO(miso),
-  .mosi_data(mosi_data)
+  .data_in(slave_data_in),
+  .data_out(slave_data_out),
+  .done(slave_done)
 );
 
 ////////////////////////////// TESTBENCH CODE //////////////////////////////
@@ -71,19 +74,102 @@ initial begin
   reset = 1;
   start = 0;
   data_in = 8'h00;
-  miso_data = 8'h00;
+  slave_data_in = 8'h00;
 
   // Wait
   #(5 * PERIOD) reset = 0;
 
   // Send data
   start = 1;
-  data_in = 8'b10101010;
-  miso_data = 8'b10101010;
+  data_in       = 8'b1111_1111;
+  slave_data_in = 8'b1010_1101;
   #(2* PERIOD) start = 0;
 
   // Wait for done
-  @(done);
+  /////////////////////////////////////
+  // REAL_IMPORTANT_NOTE:
+  // 1. @(slave_done) is a blocking statement
+  // slave done comes before master done
+  // when waiting for master done slave recived data will be shifted by one
+  // we should act on slave done not master done
+  // or we should change how master done reacts
+  ////////////////////////////////////
+  @(slave_done);
+
+  // Wait
+  #(5 * PERIOD);
+
+  // Check data
+  $display("data sent from master to slave: %b", data_in);
+  $display("data Received at slave:         %b", slave_data_out);
+  if (data_in == slave_data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  $display("data sent from slave to master: %b", slave_data_in);
+  $display("data Received at master:        %b", data_out);
+  if (slave_data_in == data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  // Wait
+  data_in       = 8'hab;
+  slave_data_in = 8'hcd;
+  #(2 * PERIOD) start = 1;
+  #(2 * PERIOD) start = 0;
+
+  // Wait for done
+  @(slave_done);
+
+  // Check data
+  $display("data sent from master to slave: %b", data_in);
+  $display("data Received at slave:         %b", slave_data_out);
+  if (data_in == slave_data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  $display("data sent from slave to master: %b", slave_data_in);
+  $display("data Received at master:        %b", data_out);
+  if (slave_data_in == data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  // Wait
+  data_in       = 8'h00;
+  slave_data_in = 8'hcd;
+  #(2 * PERIOD) start = 1;
+  #(2 * PERIOD) start = 0;
+
+  // Wait for done
+  @(slave_done);
+
+  // Wait
+  #(5 * PERIOD);
+
+  // Check data
+  $display("data sent from master to slave: %b", data_in);
+  $display("data Received at slave:         %b", slave_data_out);
+  if (data_in == slave_data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  $display("data sent from slave to master: %b", slave_data_in);
+  $display("data Received at master:        %b", data_out);
+  if (slave_data_in == data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
 
   #(10 * PERIOD);
 

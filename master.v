@@ -37,7 +37,7 @@ localparam TRANSFER = 2'b10; // wait state - Will be used to skip first halh cyc
 
 
 ////////////////////////////  Registers  //////////////////////////////
-reg [1:0] state_reg;                // the current state of the state machine
+reg [1:0] state_reg;          // the current state of the state machine
 reg [7:0] data_in_reg;        // the 1-byte data sent to the slave
 reg [7:0] data_out_reg;       // the 1-byte data received from the slave
 reg [1:0] sclk_reg;           // serial clock Register (clk divider by 2)

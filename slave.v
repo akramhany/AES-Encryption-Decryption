@@ -4,14 +4,9 @@
     * Description: this module is the slave module in the spi protocol
     * ==============================================
     * Inputs:
-      * reset: reset signal
-      * sclk: serial clock
-      * mosi: master out slave in
-      * CS: chip select
-      * miso_data: slave data in ( the data that the slave sends to the master)
+
     * Outputs:
-      * mosi_data: slave data out ( the data that the master sends to the slave)
-      * MISO: master in slave out
+
 
     * Author: Amir Kedis 
     * Date: 10 - May - 2023 
@@ -20,85 +15,113 @@
 module slave (
   // Control signals
   input reset,      // reset the state of the slave
-  input sclk,       // serial clock
+  input clk,        // real clock 
+  output done,      // done signal to indicate the slave is done
 
-  // MOSI signals
-  output [7:0] mosi_data, // the 1-byte data received from the master
-  // TODO: might need to add a signal here to indecte output is ready
-
-  // MISO signals 
-  input  [7:0] miso_data, // the 1-byte data sent to the master
+  // Data signals
+  output [7:0] data_out, // the 1-byte data received from the master
+  input  [7:0] data_in, // the 1-byte data sent to the master
   // TODO: might need to add a signal here to indecte ready to get input 
 
   // SPI signals
-  output MISO,      // master input slave output (1-bit)
-  input MOSI,       // master output slave input (1-bit)
-  input CS          // chip select active low
+  input sclk,       // serial clock (1-bit)
+  output miso,      // master input slave output (1-bit)
+  input mosi,       // master output slave input (1-bit)
+  input cs          // chip select active low
   );
 
 //////////////////////////////  Registers  //////////////////////////////
 // Will register the data because the data is not stable
-reg [7:0] mosi_data_reg; // the 1-byte data received from the master
-reg [7:0] miso_data_reg; // the 1-byte data sent to the master
-reg [2:0] counter;       // counter to count the number of bits sent/received
+reg mosi_reg;                 // master output slave input Register (1-bit)
+reg miso_reg;                 // master input slave output Register (1-bit)
+reg [7:0] data_in_reg;        // the 1-byte data sent to the slave
+reg [7:0] data_out_reg;       // the 1-byte data received from the slave
+reg sclk_reg;                 // serial clock Register
+reg sclk_shift_reg;           // serial clock shift - For detacting the rising edge
+reg [2:0] counter_reg;        // counter to count the number of bits sent/received
+reg done_reg;                 // done signal reg
+reg cs_reg;                   // chip select active low reg
 
 
 //////////////////////////////  next states  //////////////////////////////
-reg [7:0] mosi_data_next; // controling the next state logic of the mosi_data_reg
-reg [7:0] miso_data_next; // controling the next state logic of the miso_data_reg
+reg mosi_next;                // controling the next state logic of the mosi_reg
+reg miso_next;                // controling the next state logic of the miso_reg
+reg [7:0] data_in_next;       // controling the next state logic of the data_in_reg
+reg [7:0] data_out_next;      // controling the next state logic of the data_out_reg
+reg sclk_next;                // controling the next state logic of the sclk_reg
+reg sclk_shift_next;          // controling the next state logic of the sclk_shift_reg
+reg [2:0] counter_next;       // controling the next state logic of the counter_reg
+reg done_next;                // controling the next state logic of the done_reg
+reg cs_next;                  // controling the next state logic of the cs_reg
 
-
-////////////////////////////// Serial Clock //////////////////////////////
-assign sclk_en = (CS == 1'b0) ? sclk : 1'b0; // if CS is high, then sclk is low
-
-//////////////////////////////  Set up  //////////////////////////////
-always @(negedge CS) begin 
-  // reset the registers to 0 and restarts the counter
-  mosi_data_reg <= 8'b0;
-  miso_data_reg <= miso_data;
-  counter <= 4'b0;
-  //MISO <= miso_data[0];
-end
 
 ////////////////////////////// Memory //////////////////////////////
-always @(posedge sclk_en) begin
+always @(posedge clk) begin
   if (reset) begin
-    // reset the registers to 0 and restarts the counter
-    mosi_data_reg <= 8'b0;
-    miso_data_reg <= 8'b0;
-    counter <= 4'b0;
+    done_reg      <= 0;
+    miso_reg      <= 0;
+    data_out_reg  <= 0;
+    counter_reg   <= 0;
   end
   else begin
-    // updates the registers and increments the counter
-    mosi_data_reg <= mosi_data_next;
-    miso_data_reg <= miso_data_next;
-    counter <= counter + 1;
-  end
+    done_reg      <= done_next;
+    miso_reg      <= miso_next;
+    data_out_reg  <= data_out_next;
+    counter_reg   <= counter_next;
+  end 
+
+  // Not affected by reset
+  mosi_reg      <= mosi_next;
+  data_in_reg   <= data_in_next;
+  sclk_reg      <= sclk_next;
+  sclk_shift_reg<= sclk_shift_next;
+  cs_reg        <= cs_next;
 end
 
 //////////////////////////////  Next State Logic  //////////////////////////////
 always @(*) begin
-  // miso data next - the logic of sending 1 bit
-  if (CS == 1'b0) begin 
-    miso_data_next <= {miso_data_reg[6:0], 1'b0};
-  end else begin
-    miso_data_next <= miso_data_reg;
-  end
+  // Default values
+  sclk_next       = sclk;     // slck will be a mirror of the master's sclk
+  sclk_shift_next = sclk_reg; // will be late by a half cycle from the sclk used for detecting the rising edge
+  mosi_next       = mosi;
+  miso_next       = miso_reg;
+  data_in_next    = data_in_reg;
+  data_out_next   = data_out_reg;
+  counter_next    = counter_reg;
+  done_next       = 0;
+  cs_next         = cs;
 
-  // mosi data next - the logic of receiving 1 bit
-  if (CS == 1'b0) begin 
-    mosi_data_next <= {mosi_data_reg[6:0], MOSI};
-  end else begin
-    mosi_data_next <= mosi_data_reg;
+  // cs is active low
+  if (cs_reg) begin 
+    counter_next = 0;
+    data_in_next  = data_in;         // Register the data when cs is high (data_in is not stable)
+    miso_next    = data_in_reg[7];  // prepare MSB - the data is sent MSB first 
+  end
+  else begin 
+    // Risiing Edge - trick from google
+    if (!sclk_shift_reg && sclk_reg) begin
+      data_in_next = {data_in_reg[6:0], 1'bz}; // shift the data_in_reg to the left and add the new mosi bit
+      counter_next = counter_reg + 1;              // increment the counter
+
+      // last bit
+      if (counter_reg == 7) begin
+        data_out_next = {data_out_reg[6:0], mosi_reg}; // FIXME: will need to change
+        done_next     = 1;                            // set the done signal
+        data_in_next  = data_in;                      // read the next byte to continue transction
+      end
+
+    end
+    // Falling Edge
+    else if (sclk_shift_reg && !sclk_reg) begin
+      miso_next = data_in_reg[7];                      // OUTPUT the MSB
+      data_out_next = {data_out_reg[6:0], mosi_reg};
+    end
   end
 end
 
-//////////////////////////////  Output Logic  //////////////////////////////
-
-// sends the most significant bit first
-// disonnect the output when CS is high to aloow other slaves to communicate
-assign MISO = (CS == 1'b0) ? miso_data_reg[7] : 1'bz; // if CS is high, then MISO is high impedance
-
-assign mosi_data = mosi_data_reg; // the 1-byte data received from the master
+//////////////////////////////  Output Assignment  //////////////////////////////
+assign done = done_reg;
+assign data_out = data_out_reg;
+assign miso = (cs == 0) ? miso_reg : 1'bz;
 
 endmodule

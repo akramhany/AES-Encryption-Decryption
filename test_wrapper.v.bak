@@ -45,7 +45,7 @@ reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1
 reg clk = 0;
 always #(PERIOD / 2) clk = ~clk;
 
-reg reset = 0;
+reg reset;
 reg start;
 wire buzy;
 wire done;
@@ -108,6 +108,7 @@ case (wrapper_state)
 
         start = 0;
         data_in = 8'h00;
+        slave_data_in = 8'h00;
         key_size = SIZE_256;
         i = key_size + 16;
         //TODO: create another reg of size 256 to store the key in it

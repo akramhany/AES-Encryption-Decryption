@@ -122,7 +122,7 @@ always@(*) begin
             end
         end
         FILL_KEY: begin
-            if(c2 < 4*parameters[7:4]) begin
+            if(c2 < parameters) begin
                 if(temp_done)begin
                     key[7:0] = data_out;
                     key = key << 8; 
@@ -140,18 +140,18 @@ always@(*) begin
             cipher_out_data_k3_reg = cipher_out_data_k3;
             if(c3 < 16) begin
 				if(temp_done) begin
-                    case(parameters[7:4])
-                        4'd4: begin
+                    case(parameters)
+                        8'd16: begin
                             data_in = cipher_out_data_k1_reg[127:120];
                             cipher_out_data_k1_reg = cipher_out_data_k1_reg << 8;
                             c3 = c3 +1;
                         end
-                        4'd6: begin
+                        8'd24: begin
                             data_in = cipher_out_data_k2_reg[127:120];
                             cipher_out_data_k2_reg = cipher_out_data_k2_reg << 8;
                             c3 = c3 +1;
                         end
-                        4'd8: begin
+                        8'd32: begin
                             data_in = cipher_out_data_k3_reg[127:120];
                             cipher_out_data_k3_reg = cipher_out_data_k3_reg << 8;
                             c3 = c3 +1;

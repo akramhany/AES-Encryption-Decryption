@@ -31,6 +31,7 @@ localparam SEND_DEC = 3'b100;
 localparam REC_DEC = 3'b101;
 localparam CHECK_DEC = 3'b110;
 
+//localparam BigReg = key_size
 
 /// for testing, sending and reciving data
 wire [127:0] plane_text;
@@ -45,7 +46,7 @@ reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1
 reg clk = 0;
 always #(PERIOD / 2) clk = ~clk;
 
-reg reset = 0;
+reg reset;
 reg start;
 wire buzy;
 wire done;
@@ -60,7 +61,7 @@ wire slave_done;
 //reg [7:0] slave_data_in;
 wire temp;
 
-reg start_system = 1;
+reg start_system;
 reg [2:0] wrapper_state = IDLE;
 reg [7:0] key_size;
 
@@ -98,9 +99,9 @@ always @(posedge clk) begin
 
 end
 
-reg [5:0] i = 0;
+reg [6:0] i = 0;
 
-always @ (*)  begin
+always @ (posedge clk)  begin
 
 case (wrapper_state)
     
@@ -118,7 +119,6 @@ case (wrapper_state)
 
     SEND_ENC: begin
 
-        
         if (i == key_size + 16) begin
             start = 1;
             data_in = plane_text[127 -: 8];
@@ -133,22 +133,21 @@ case (wrapper_state)
             end
             else if (i >= 0 && i < key_size)    begin
                 data_in = key[(i + 1) * 8 - 1 -: 8];
+                if (i == 0) begin
+                    wrapper_state = REC_ENC;
+                    i = 17;
+                end
                 i = i - 1;
             end
             else if (i == key_size)   begin
                 data_in = key_size;
                 i = i - 1;
             end
-            else begin
-                wrapper_state = REC_ENC;
-                i = 16;
-            end
         end
-        else begin
+    /*    else begin
             start = 0;
-        end
-    
-    end
+        end 
+    */end
 
     REC_ENC: begin
 
@@ -180,6 +179,14 @@ case (wrapper_state)
     end
 
 endcase
+end
+
+initial begin
+start_system = 1;
+reset = 1;
+
+#(5 * PERIOD) reset = 0;
+
 end
 
 

@@ -105,7 +105,7 @@ always @(*) begin
 
       // last bit
       if (counter_reg == 7) begin
-        data_out_next = {data_out_reg[6:0], mosi_reg}; // FIXME: will need to change
+        data_out_next = {data_out_reg[6:0], mosi}; // FIXME: will need to change
         done_next     = 1;                            // set the done signal
         data_in_next  = data_in;                      // read the next byte to continue transction
       end

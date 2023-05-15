@@ -171,6 +171,56 @@ initial begin
     $display("Test failed");
   end
 
+  // Wait
+  data_in       = 8'h11;
+  slave_data_in = 8'h11;
+  #(2 * PERIOD) start = 1;
+  #(2 * PERIOD) start = 0;
+
+  @(slave_done);
+
+  // Check data
+  $display("data sent from master to slave: %b", data_in);
+  $display("data Received at slave:         %b", slave_data_out);
+  if (data_in == slave_data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  $display("data sent from slave to master: %b", slave_data_in);
+  $display("data Received at master:        %b", data_out);
+  if (slave_data_in == data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  // Wait
+  data_in       = 8'h7e;
+  slave_data_in = 8'h00;
+  #(2 * PERIOD) start = 1;
+  #(2 * PERIOD) start = 0;
+
+  @(slave_done);
+
+  // Check data
+  $display("data sent from master to slave: %b", data_in);
+  $display("data Received at slave:         %b", slave_data_out);
+  if (data_in == slave_data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
+  $display("data sent from slave to master: %b", slave_data_in);
+  $display("data Received at master:        %b", data_out);
+  if (slave_data_in == data_out) begin
+    $display("Test passed");
+  end else begin
+    $display("Test failed");
+  end
+
   #(10 * PERIOD);
 
   $finish;

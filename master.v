@@ -127,6 +127,8 @@ always @(*) begin
       else if  (sclk_reg == 2'b01) begin
         data_in_next = {data_in_reg[6:0], 1'bz}; // shift the data
         data_out_next = {data_out_reg[6:0], miso}; // shift the data
+        $display("%d", miso);
+        $display("%d", $time);
       end
       // 3. Rising Edge => Increment counter
       else if (sclk_reg == 2'b11) begin
@@ -152,6 +154,7 @@ assign mosi = mosi_reg;       // master output slave input (1-bit)
 // sends the clock every two cycles only when state is transfer
 assign sclk = ~sclk_reg[1] & (state_reg == TRANSFER);     // serial clock (1-bit)
 assign buzy = (state_reg != IDLE);  // busy is high if state is transfer or wait
+//assign data_out = (done_reg == 1'b1) ? data_out_reg : data_out;
 assign data_out = data_out_reg;
 assign done = done_reg;    
 assign cs = cs_reg;           // chip select active low

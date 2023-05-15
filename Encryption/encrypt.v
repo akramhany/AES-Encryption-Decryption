@@ -73,6 +73,7 @@ always@(posedge clk) begin
         in_data = 0;
         c1 = 0;
         c3 = 0;
+        enc_recived = 0;
         //should we add a counter to give the cipher a chance to compute ??
 
         state_reg <= 3'b0;
@@ -106,10 +107,12 @@ always @(posedge clk) begin
                 state_next = FILL_DATA;
             end
             else begin
+                
                 state_next = SEND_DATA;
             end
         end
         SEND_DATA: begin
+            enc_recived = 1;
             cipher_out_data_k1_reg = cipher_out_data_k1;
             cipher_out_data_k2_reg = cipher_out_data_k2;
             cipher_out_data_k3_reg = cipher_out_data_k3;
@@ -127,8 +130,7 @@ always @(posedge clk) begin
                             c3 = c3 +1;
                         end
                         8'd32: begin
-                            data_in = cipher_out_data_k3_reg[127:120];
-                            cipher_out_data_k3_reg = cipher_out_data_k3_reg << 8;
+                            data_in = cipher_out_data_k3_reg[128 - c3 * 8 - 1 -: 8];
                             c3 = c3 +1;
                         end
                     endcase
@@ -136,7 +138,6 @@ always @(posedge clk) begin
                 state_next = SEND_DATA;
             end
             else if(c3 == 16) begin
-                enc_recived = 1;
                 state_next = IDLE;
             end
 

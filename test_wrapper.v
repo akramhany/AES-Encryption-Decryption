@@ -59,7 +59,7 @@ wire sclk;
 
 wire slave_done;
 //reg [7:0] slave_data_in;
-wire temp;
+wire enc_send;
 
 reg start_system;
 reg [2:0] wrapper_state = IDLE;
@@ -86,7 +86,7 @@ encrypt encrypt_file (
     .mosi(mosi),
     .miso(miso),
     .sclk(sclk),
-    .enc_recived(temp),
+    .enc_recived(enc_send),
     .done(slave_done)
 );
 
@@ -115,6 +115,8 @@ always @(posedge counter[4] ) begin
 if(start)
   start = 1'b0; 
 end
+
+
 
 always @ (posedge clk)  begin
 
@@ -161,10 +163,14 @@ case (wrapper_state)
     end
 
     REC_ENC: begin
-
-        if (slave_done) begin
+        if (i ==  16 && enc_send) begin
+            start = 1;
+            test_result_recive[i * 8 - 1 -: 8] = data_out;
+            i = i - 1;
+        end
+        else if (slave_done && enc_send) begin
+            start = 1;
             if (i > 0) begin
-                start = 1;
                 test_result_recive[i * 8 - 1 -: 8] = data_out;
                 i = i - 1;
             end
@@ -192,6 +198,7 @@ end
 initial begin
 start_system = 1;
 reset = 1;
+test_result_recive = 0;
 
 #(5 * PERIOD) reset = 0;
 

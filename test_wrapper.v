@@ -101,7 +101,18 @@ end
 
 reg [6:0] i = 0;
 
-always @ (posedge clk)  begin
+reg [8:0] counter = 0;
+
+always @ (posedge clk) begin
+counter = counter + 1;
+end
+
+always @(posedge counter[8] ) begin
+if(start)
+  start = 1'b0; 
+end
+
+always @ (posedge clk or wrapper_state )  begin
 
 case (wrapper_state)
     
@@ -124,8 +135,7 @@ case (wrapper_state)
             data_in = plane_text[127 -: 8];
             i = i - 1;
         end
-
-        if (slave_done) begin
+        else if (slave_done) begin
             start = 1;
             if (i > key_size)    begin
                 data_in = plane_text[(i - key_size) * 8 - 1 -: 8];
@@ -144,10 +154,7 @@ case (wrapper_state)
                 i = i - 1;
             end
         end
-    /*    else begin
-            start = 0;
-        end 
-    */end
+    end
 
     REC_ENC: begin
 

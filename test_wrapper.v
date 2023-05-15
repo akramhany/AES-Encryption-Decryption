@@ -102,7 +102,7 @@ end
 reg [6:0] i = 0;
 
 reg [8:0] counter = 0;
-
+/*
 always @ (posedge clk) begin
 counter = counter + 1;
 end
@@ -110,9 +110,9 @@ end
 always @(posedge counter[8] ) begin
 if(start)
   start = 1'b0; 
-end
+end*/
 
-always @ (posedge clk or wrapper_state )  begin
+always @ (posedge clk or wrapper_state or slave_done)  begin
 
 case (wrapper_state)
     

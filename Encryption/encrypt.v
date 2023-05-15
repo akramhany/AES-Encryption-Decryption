@@ -120,13 +120,11 @@ always @(posedge clk) begin
 				if(temp_done) begin
                     case(param)
                         8'd16: begin
-                            data_in = cipher_out_data_k1_reg[127:120];
-                            cipher_out_data_k1_reg = cipher_out_data_k1_reg << 8;
+                            data_in = cipher_out_data_k1_reg[128 - c3 * 8 - 1 -: 8];
                             c3 = c3 +1;
                         end
                         8'd24: begin
-                            data_in = cipher_out_data_k2_reg[127:120];
-                            cipher_out_data_k2_reg = cipher_out_data_k2_reg << 8;
+                            data_in = cipher_out_data_k2_reg[128 - c3 * 8 - 1 -: 8];
                             c3 = c3 +1;
                         end
                         8'd32: begin

@@ -37,10 +37,10 @@ localparam CHECK_DEC = 3'b110;
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
 wire [127:0] enc_text;
-assign enc_text = 128'h8ea2b7ca516745bfeafc49904b496089;
+assign enc_text = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
 reg [127:0] test_result_send;
 reg [127:0] test_result_recive;
-reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
 
 
 reg clk = 0;
@@ -141,8 +141,8 @@ case (wrapper_state)
     IDLE: begin
         start = 0;
         data_in = 8'h00;
-        key_size = SIZE_256;
-        i = key_size + 16;
+        key_size = SIZE_192;
+        i = SIZE_256 + 16;
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
             wrapper_state = SEND_ENC;
@@ -151,18 +151,18 @@ case (wrapper_state)
 
     SEND_ENC: begin
 
-        if (i == key_size + 16) begin
+        if (i == SIZE_256 + 16) begin
             //start = 1;
             data_in = plane_text[127 -: 8];
             i = i - 1;
         end
         else if (slave_done) begin
             //start = 1;
-            if (i > key_size)    begin
-                data_in = plane_text[(i - key_size) * 8 - 1 -: 8];
+            if (i > SIZE_256)    begin
+                data_in = plane_text[(i - key_size - (SIZE_256 - key_size)) * 8 - 1 -: 8];
                 i = i - 1;
             end
-            else if (i >= 0 && i < key_size)    begin
+            else if (i >= 0 && i < SIZE_256)    begin
                 data_in = key[(i + 1) * 8 - 1 -: 8];
                 if (i == 0) begin
                     wrapper_state = REC_ENC;
@@ -170,7 +170,7 @@ case (wrapper_state)
                 end
                 i = i - 1;
             end
-            else if (i == key_size)   begin
+            else if (i == SIZE_256)   begin
                 data_in = key_size;
                 i = i - 1;
             end

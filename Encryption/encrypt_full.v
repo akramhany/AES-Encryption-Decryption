@@ -88,9 +88,6 @@ always @(posedge clk) begin
         FILL_DATA: begin
             if(temp_done) begin
                 in_data = data_out;
-                state_next = FILL_DATA;
-            end
-            else begin
                 state_next = SEND_DATA;
             end
         end

@@ -75,9 +75,9 @@ always@(posedge clk) begin
         parameters <= 8'b0;
         key <= 256'b0;
 
-        c1 <= 5'b0;
-        c2 <= 6'b0;
-        c3 <= 5'b0;
+        c1 = 5'b0;
+        c2 = 6'b0;
+        c3 = 5'b0;
         
         //should we add a counter to give the cipher a chance to compute ??
 
@@ -89,15 +89,14 @@ always@(posedge clk) begin
     end
 end
 
-always@(*) begin
+always @(posedge clk) begin
     state_next = state_reg;
     
     case(state_reg)
         IDLE: begin
-            c1 <= 5'b0;
-            c2 <= 6'b0;
-            c3 <= 5'b0;
-            enc_recived = 1;
+            c1 = 5'b0;
+            c2 = 6'b0;
+            c3 = 5'b0;
             if(!cs) begin
                 state_next <= FILL_DATA;
             end
@@ -105,9 +104,13 @@ always@(*) begin
         FILL_DATA: begin
             if(c1 < 16)begin
                 if(temp_done) begin
+                    $display("hahahahahah");
                     cipher_in_data[7:0] = data_out;
-                    cipher_in_data = cipher_in_data << 8;
-                    c1 = c1 + 1;
+                    if (c1 < 15) begin
+                        cipher_in_data = cipher_in_data << 8;
+                    end
+                    c1 = c1 + 1'b1;
+                    $display("%b", c1);
                 end
                 state_next = FILL_DATA;
             end
@@ -118,7 +121,8 @@ always@(*) begin
         FILL_PARAMETERS: begin
             if(temp_done) begin
                 parameters = data_out;
-                state_next = FILL_KEY;
+                if(parameters != 0)
+                    state_next = FILL_KEY;
             end
         end
         FILL_KEY: begin

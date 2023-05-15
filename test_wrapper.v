@@ -101,18 +101,22 @@ end
 
 reg [6:0] i = 0;
 
-reg [8:0] counter = 0;
-/*
+reg [4:0] counter = 0;
+
+always @ (posedge start) begin
+    counter = 0;
+end
+
 always @ (posedge clk) begin
 counter = counter + 1;
 end
 
-always @(posedge counter[8] ) begin
+always @(posedge counter[4] ) begin
 if(start)
   start = 1'b0; 
-end*/
+end
 
-always @ (posedge clk or wrapper_state or slave_done)  begin
+always @ (posedge clk)  begin
 
 case (wrapper_state)
     
@@ -168,9 +172,6 @@ case (wrapper_state)
                 wrapper_state = CHECK_ENC;
                 i = key_size + 16;
             end
-        end
-        else    begin
-            start = 0;  //Note: think if handling start should be done in the encrypt or not
         end
     end
 

@@ -121,7 +121,7 @@ end
 
 //////////////////////////////  Output Assignment  //////////////////////////////
 assign done = done_reg;
-assign data_out = data_out_reg;
+assign data_out = (done_reg == 1'b1) ? data_out_reg : data_out;
 assign miso = (cs == 0) ? miso_reg : 1'bz;
 
 endmodule

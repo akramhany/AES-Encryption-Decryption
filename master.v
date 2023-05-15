@@ -127,8 +127,6 @@ always @(*) begin
       else if  (sclk_reg == 2'b01) begin
         data_in_next = {data_in_reg[6:0], 1'bz}; // shift the data
         data_out_next = {data_out_reg[6:0], miso}; // shift the data
-        $display("%d", miso);
-        $display("%d", $time);
       end
       // 3. Rising Edge => Increment counter
       else if (sclk_reg == 2'b11) begin

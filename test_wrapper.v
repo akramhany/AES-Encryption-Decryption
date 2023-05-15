@@ -58,7 +58,6 @@ wire miso;
 wire sclk;
 
 wire slave_done;
-//reg [7:0] slave_data_in;
 wire enc_send;
 
 reg start_system;
@@ -101,29 +100,45 @@ end
 
 reg [6:0] i = 0;
 
-reg [4:0] counter = 0;
+/*reg  [2:0]counter = 0;
 
 always @ (posedge start) begin
-    counter = 0;
+    counter <= 0;
 end
 
 always @ (posedge clk) begin
-counter = counter + 1;
+counter <= counter + 1;
 end
 
-always @(posedge counter[4] ) begin
+always @(posedge counter[2] ) begin
 if(start)
-  start = 1'b0; 
+  start <= 1'b0; 
+end*/
+
+//always #(PERIOD * 2) start = ~start;
+
+reg [3:0] start_counter = 0;
+reg [1:0] start_mini_counter = 0;
+
+always @ (negedge clk) begin
+    
+    if (start_mini_counter == 2'b00 && wrapper_state != IDLE) begin
+        $display("1");
+        start = ~start;
+        start_mini_counter = start_mini_counter + 1;
+    end
+    else if (start_mini_counter == 2'b01 && wrapper_state != IDLE)   begin
+        $display("2");
+        start_mini_counter = 2'b00;
+end
 end
 
 
-
-always @ (posedge clk)  begin
+always @ (*)  begin
 
 case (wrapper_state)
     
     IDLE: begin
-
         start = 0;
         data_in = 8'h00;
         key_size = SIZE_256;
@@ -137,12 +152,12 @@ case (wrapper_state)
     SEND_ENC: begin
 
         if (i == key_size + 16) begin
-            start = 1;
+            //start = 1;
             data_in = plane_text[127 -: 8];
             i = i - 1;
         end
         else if (slave_done) begin
-            start = 1;
+            //start = 1;
             if (i > key_size)    begin
                 data_in = plane_text[(i - key_size) * 8 - 1 -: 8];
                 i = i - 1;
@@ -151,7 +166,7 @@ case (wrapper_state)
                 data_in = key[(i + 1) * 8 - 1 -: 8];
                 if (i == 0) begin
                     wrapper_state = REC_ENC;
-                    i = 17;
+                    i = 20;
                 end
                 i = i - 1;
             end
@@ -163,13 +178,13 @@ case (wrapper_state)
     end
 
     REC_ENC: begin
-        if (i ==  16 && enc_send) begin
-            start = 1;
+        if (i ==  19) begin
+            //start = 1;
             test_result_recive[i * 8 - 1 -: 8] = data_out;
             i = i - 1;
         end
-        else if (slave_done && enc_send) begin
-            start = 1;
+        else if (slave_done) begin
+            //start = 1;
             if (i > 0) begin
                 test_result_recive[i * 8 - 1 -: 8] = data_out;
                 i = i - 1;
@@ -191,6 +206,7 @@ case (wrapper_state)
         start_system = 0;   //TODO: delete this statement if you want the program to run normally
         wrapper_state = IDLE;
     end
+    
 
 endcase
 end
@@ -200,7 +216,7 @@ start_system = 1;
 reset = 1;
 test_result_recive = 0;
 
-#(5 * PERIOD) reset = 0;
+#(8 * PERIOD) reset = 0;
 
 end
 

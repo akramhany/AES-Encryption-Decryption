@@ -10,6 +10,7 @@
    * Date: 14/5/2023 
 */
 `include "Encryption/cipher.v"
+`include "Decryption/inv_cipher.v"
 `include "slave_full.v"
 
 module AES (
@@ -39,7 +40,7 @@ wire [127:0] inv_cipher_out_data_k3;
 wire temp_done;
 wire [391:0] data_out;
 wire [391:0] data_in_w;
-reg [127:0] data_in;
+reg [255:0] data_in;
 reg [2:0] state_reg;
 reg [2:0] state_next;
 
@@ -97,53 +98,56 @@ always @(*) begin
             if(temp_done) begin
                 case(param)
                     8'd16: begin
-                        data_in = cipher_out_data_k1;
+                        data_in[255:128] = cipher_out_data_k1;
+                        data_in[127:0] = inv_cipher_out_data_k1;
                     end
                     8'd24: begin
-                        data_in = cipher_out_data_k2;
+                        data_in[255:128] = cipher_out_data_k2;
+                        data_in[127:0] = inv_cipher_out_data_k2;
                     end
                     8'd32: begin
-                        data_in = cipher_out_data_k3;
-                    end
-                endcase
-                state_next = WAIT1;
-            end
-        end
-
-        WAIT1: begin
-            if(temp_done) begin
-                state_next = WAIT2;
-            end
-        end
-
-        WAIT2: begin
-            if(temp_done) begin
-                state_next = FILL_DATA_DEC;
-            end
-        end
-
-        FILL_DATA_DEC: begin
-            if(temp_done) begin
-                in_data = data_out;
-                state_next = SEND_DATA_DEC;
-            end
-        end
-        SEND_DATA_DEC: begin
-            if(temp_done) begin
-                case(param)
-                    8'd16: begin
-                        data_in = inv_cipher_out_data_k1;
-                    end
-                    8'd24: begin
-                        data_in = inv_cipher_out_data_k2;
-                    end
-                    8'd32: begin
-                        data_in = inv_cipher_out_data_k3;
+                        data_in[255:128] = cipher_out_data_k3;
+                        data_in[127:0] = inv_cipher_out_data_k3;
                     end
                 endcase
                 state_next = IDLE;
             end
         end
+
+        // WAIT1: begin
+        //     if(temp_done) begin
+        //         state_next = WAIT2;
+        //     end
+        // end
+
+        // WAIT2: begin
+        //     if(temp_done) begin
+        //         state_next = FILL_DATA_DEC;
+        //     end
+        // end
+
+        // FILL_DATA_DEC: begin
+        //     if(temp_done) begin
+        //         in_data = data_out;
+        //         state_next = SEND_DATA_DEC;
+        //     end
+        // end
+        // SEND_DATA_DEC: begin
+        //     if(temp_done) begin
+        //         case(param)
+        //             8'd16: begin
+        //                 data_in = inv_cipher_out_data_k1;
+        //             end
+        //             8'd24: begin
+        //                 data_in = inv_cipher_out_data_k2;
+        //             end
+        //             8'd32: begin
+        //                 data_in = inv_cipher_out_data_k3;
+        //             end
+        //         endcase
+        //         state_next = IDLE;
+        //     end
+        // end
     endcase
 end
 
@@ -164,22 +168,22 @@ cipher #(8,14) k3 (
      );
 
 inv_cipher #(4,10) ik1 (
-    .i_data(in_data[391-:128]),
+    .i_data(cipher_out_data_k1),
     .i_key(in_data[255-:128]),
     .o_data(inv_cipher_out_data_k1)
      );
 inv_cipher #(6,12) ik2 (
-    .i_data(in_data[391-:128]),
+    .i_data(cipher_out_data_k2),
     .i_key(in_data[255-:192]),
     .o_data(inv_cipher_out_data_k2)
      );
 inv_cipher #(8,14) ik3 (
-    .i_data(in_data[391-:128]),
+    .i_data(cipher_out_data_k3),
     .i_key(in_data[255-:256]),
     .o_data(inv_cipher_out_data_k3)
      );
 
 assign done = temp_done;
-assign data_in_w[383 -: 128] = data_in;
+assign data_in_w[383 -: 256] = data_in;
 assign param = in_data[263-:8];
 endmodule

@@ -1,0 +1,29 @@
+{D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v} {2 {vlog -work work -stats=none {D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module key_expansion
+-- Compiling module add_round_key
+-- Compiling module SBox
+-- Compiling module sub_bytes
+-- Compiling module shift_rows
+-- Compiling module mix_columns
+-- Compiling module cipher
+** Warning: ** while parsing file included at D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v(13)
+** while parsing file included at Decryption/inv_cipher.v(2)
+** at Decryption\..\key_expansion.v(15): (vlog-2275) Existing module 'key_expansion' will be overwritten.
+-- Compiling module key_expansion
+** Warning: ** while parsing file included at D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v(13)
+** while parsing file included at Decryption/inv_cipher.v(3)
+** at Decryption\..\add_round_key.v(16): (vlog-2275) Existing module 'add_round_key' will be overwritten.
+-- Compiling module add_round_key
+-- Compiling module InvSBox
+-- Compiling module inv_sub_bytes
+-- Compiling module inv_shift_rows
+-- Compiling module inv_mix_columns
+-- Compiling module inv_cipher
+-- Compiling module slave_full
+-- Compiling module AES
+
+Top level modules:
+	AES
+
+} {} {}}

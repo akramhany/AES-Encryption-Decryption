@@ -142,67 +142,68 @@ case (wrapper_state)
     end
 
     CHECK_ENC: begin
-        if (test_result_recive[383 -: 128] == enc_text) begin
+        if (test_result_recive[383 -: 128] == enc_text && test_result_recive[255 -: 128] == plane_text) begin
             $display("Finallyyyyyyyyyyyyyy");
-            $display("%h",test_result_recive[383 -: 128]);
+            $display("%h",test_result_recive[383 -: 256]);
             $display("%h",plane_text);
         end
         else begin
             $display("Kill me please");
-        end
-           //TODO: delete this statement if you want the program to run normally
-        wrapper_state_next = SEND_DEC;
-        data_in = {test_result_recive[383 -: 128], key_size, key};    
-    end
-
-    SEND_DEC: begin
-      start = 0;
-      if (done) begin
-        start = 1;
-        wrapper_state_next = WAIT_DEC1;
-      end
-    end
-
-    WAIT_DEC1: begin
-        start = 0;
-        if (done) begin
-          start = 1;
-          wrapper_state_next = WAIT_DEC2;    
-        end
-    end
-
-    WAIT_DEC2: begin
-        start = 0;
-        if (done) begin
-          start = 1;
-          wrapper_state_next = REC_DEC;    
-        end
-    end
-
-    REC_DEC: begin
-        start = 0;
-        if (done) begin
-          start = 1;
-          test_result_recive = data_out;
-          wrapper_state_next = CHECK_DEC;
-        end 
-    end
-
-    CHECK_DEC: begin
-        if (test_result_recive[383 -: 128] == plane_text) begin
-            $display("OMGGGGGGGGGGGGGGGGGGGGGGG");
-            $display("%h",test_result_recive[383 -: 128]);
-            $display("%h",plane_text);
-        end
-        else begin
-            $display("Kill me please");
-            $display("%h",test_result_recive[383 -: 128]);
-            $display("%h",plane_text);
         end
            //TODO: delete this statement if you want the program to run normally
         wrapper_state_next = IDLE;
-        start_system = 0;
+        data_in = {test_result_recive[383 -: 128], key_size, key};
+        start_system = 0;    
     end
+
+    // SEND_DEC: begin
+    //   start = 0;
+    //   if (done) begin
+    //     start = 1;
+    //     wrapper_state_next = WAIT_DEC1;
+    //   end
+    // end
+
+    // WAIT_DEC1: begin
+    //     start = 0;
+    //     if (done) begin
+    //       start = 1;
+    //       wrapper_state_next = WAIT_DEC2;    
+    //     end
+    // end
+
+    // WAIT_DEC2: begin
+    //     start = 0;
+    //     if (done) begin
+    //       start = 1;
+    //       wrapper_state_next = REC_DEC;    
+    //     end
+    // end
+
+    // REC_DEC: begin
+    //     start = 0;
+    //     if (done) begin
+    //       start = 1;
+    //       test_result_recive = data_out;
+    //       wrapper_state_next = CHECK_DEC;
+    //     end 
+    // end
+
+    // CHECK_DEC: begin
+    //     if (test_result_recive[383 -: 128] == plane_text) begin
+    //         $display("OMGGGGGGGGGGGGGGGGGGGGGGG");
+    //         $display("%h",test_result_recive[383 -: 128]);
+    //         $display("%h",plane_text);
+    //     end
+    //     else begin
+    //         $display("Kill me please");
+    //         $display("%h",test_result_recive[383 -: 128]);
+    //         $display("%h",plane_text);
+    //     end
+    //        //TODO: delete this statement if you want the program to run normally
+    //     wrapper_state_next = IDLE;
+    //     start_system = 0;
+    // end
 
 endcase
 end

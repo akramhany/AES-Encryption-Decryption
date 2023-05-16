@@ -31,16 +31,25 @@ localparam SEND_DEC = 3'b100;
 localparam REC_DEC = 3'b101;
 localparam CHECK_DEC = 3'b110;
 
+localparam key_128 = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
+localparam key_192 = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+localparam key_256 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+
+localparam ciphered_text_128 = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
+localparam ciphered_text_192 = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
+localparam ciphered_text_256 = 128'h8ea2b7ca516745bfeafc49904b496089;
+
 //localparam BigReg = key_size
 
-/// for testing, sending and reciving data
+/// for testing, sending and reciving data/////////////////////////////////////////////////////
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
 wire [127:0] enc_text;
-assign enc_text = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
+assign enc_text = ciphered_text_128;
 reg [127:0] test_result_send;
-reg [127:0] test_result_recive;
-reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+reg [127:0] test_result_recive[1:3];
+reg [255:0] key = key_128;
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 
 reg clk = 0;
@@ -58,7 +67,8 @@ wire miso;
 wire sclk;
 
 wire slave_done;
-wire enc_send;
+//reg [7:0] slave_data_in;
+wire enc_sending;
 
 reg start_system;
 reg [2:0] wrapper_state = IDLE;
@@ -85,7 +95,7 @@ encrypt encrypt_file (
     .mosi(mosi),
     .miso(miso),
     .sclk(sclk),
-    .enc_recived(enc_send),
+    .enc_sending(enc_sending),
     .done(slave_done)
 );
 
@@ -99,49 +109,42 @@ always @(posedge clk) begin
 end
 
 reg [6:0] i = 0;
+reg [1:0] test_number = 1'b1;
 
-/*reg  [2:0]counter = 0;
-
+reg [4:0] counter = 0;
 always @ (posedge start) begin
-    counter <= 0;
+    counter = 0;
 end
-
 always @ (posedge clk) begin
-counter <= counter + 1;
+counter = counter + 1;
 end
-
-always @(posedge counter[2] ) begin
+always @(posedge counter[4] ) begin
 if(start)
-  start <= 1'b0; 
-end*/
+  start = 1'b0; 
+end
 
-//always #(PERIOD * 2) start = ~start;
+reg [2:0] receive_counter = 0;
+reg receive_order = 0;
 
-reg [3:0] start_counter = 0;
-reg [1:0] start_mini_counter = 0;
-
-always @ (negedge clk) begin
-    
-    if (start_mini_counter == 2'b00 && wrapper_state != IDLE) begin
-        $display("1");
-        start = ~start;
-        start_mini_counter = start_mini_counter + 1;
+always @ (posedge clk)  begin
+    receive_counter = receive_counter + 1;
+end
+always @(posedge receive_counter[2]) begin
+    if(start && enc_sending) begin
+        receive_order = 1'b0;
+        start = 1'b0;
     end
-    else if (start_mini_counter == 2'b01 && wrapper_state != IDLE)   begin
-        $display("2");
-        start_mini_counter = 2'b00;
-end
+    if (slave_done == 0 && receive_order)
+        start = 1'b1;
 end
 
-
-always @ (*)  begin
-
+always @ (posedge clk)  begin
 case (wrapper_state)
     
     IDLE: begin
         start = 0;
         data_in = 8'h00;
-        key_size = SIZE_192;
+        key_size = SIZE_128;
         i = SIZE_256 + 16;
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
@@ -152,14 +155,14 @@ case (wrapper_state)
     SEND_ENC: begin
 
         if (i == SIZE_256 + 16) begin
-            //start = 1;
+            start = 1;
             data_in = plane_text[127 -: 8];
             i = i - 1;
         end
         else if (slave_done) begin
-            //start = 1;
+            start = 1;
             if (i > SIZE_256)    begin
-                data_in = plane_text[(i - key_size - (SIZE_256 - key_size)) * 8 - 1 -: 8];
+                data_in = plane_text[(i - SIZE_256) * 8 - 1 -: 8];
                 i = i - 1;
             end
             else if (i >= 0 && i < SIZE_256)    begin
@@ -178,16 +181,19 @@ case (wrapper_state)
     end
 
     REC_ENC: begin
-        if (i ==  19) begin
-            //start = 1;
-            test_result_recive[i * 8 - 1 -: 8] = data_out;
-            i = i - 1;
-        end
-        else if (slave_done) begin
-            //start = 1;
+
+        if (enc_sending) begin
             if (i > 0) begin
-                test_result_recive[i * 8 - 1 -: 8] = data_out;
-                i = i - 1;
+                if (i == 19) begin
+                    receive_order = 1;
+                    i = i - 1;
+                end
+                else if (slave_done) begin
+                    receive_order = 1;
+                    test_result_recive[test_number][(i) * 8 - 1 -: 8] = data_out;
+                    i = i - 1;
+                  
+                end
             end
             else    begin
                 wrapper_state = CHECK_ENC;
@@ -197,7 +203,7 @@ case (wrapper_state)
     end
 
     CHECK_ENC: begin
-        if (test_result_recive == enc_text) begin
+        if (test_result_recive[test_number] == enc_text) begin
             $display("Finallyyyyyyyyyyyyyy");
         end
         else begin
@@ -205,8 +211,8 @@ case (wrapper_state)
         end
         start_system = 0;   //TODO: delete this statement if you want the program to run normally
         wrapper_state = IDLE;
+        test_number = test_number + 1'b1;
     end
-    
 
 endcase
 end
@@ -214,9 +220,8 @@ end
 initial begin
 start_system = 1;
 reset = 1;
-test_result_recive = 0;
 
-#(8 * PERIOD) reset = 0;
+#(5 * PERIOD) reset = 0;
 
 end
 

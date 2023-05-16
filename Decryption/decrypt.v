@@ -9,9 +9,9 @@
    * Author: Adham Hussin
    * Date: 14/5/2023 
 */
-`include "cipher.v"
+`include "inv_cipher.v"
 `include "../slave.v"
-module encrypt (
+module decrypt (
     input reset,
     input cs,          
     input clk,
@@ -143,17 +143,17 @@ always @(posedge clk) begin
     endcase
 end
 
-cipher #(4,10) k1 (
+inv_cipher #(4,10) k1 (
     .i_data(in_data[391-:128]),
     .i_key(in_data[255-:128]),
     .o_data(cipher_out_data_k1)
      );
-cipher #(6,12) k2 (
+inv_cipher #(6,12) k2 (
     .i_data(in_data[391-:128]),
     .i_key(in_data[255-:192]),
     .o_data(cipher_out_data_k2)
      );
-cipher #(8,14) k3 (
+inv_cipher #(8,14) k3 (
     .i_data(in_data[391-:128]),
     .i_key(in_data[255-:256]),
     .o_data(cipher_out_data_k3)

@@ -1,9 +1,5 @@
 
-`include "../key_expansion.v"
-`include "../add_round_key.v"
-`include "inv_sub_bytes.v"
-`include "inv_shift_rows.v"
-`include "inv_mix_columns.v"
+
 
 module inv_cipher #(
     parameter NK = 4,
@@ -31,7 +27,7 @@ add_round_key add(.i_state(i_data), .i_key(expanded_key[127 :0]), .o_state(temp_
 
 genvar i;
 generate
-    for(i = 1; i < NR ; i = i + 1) begin
+    for(i = 1; i < NR ; i = i + 1) begin : loop_inv_cipher
         inv_shift_rows shift(.i_state(temp_state[i-1][127:0]), .o_state(shift_out[i-1][127:0]));
         inv_sub_bytes sub(.i_initial_state(shift_out[i-1][127:0]), .o_result_state(sub_out[i-1][127:0]));
         add_round_key add2(.i_state(sub_out[i-1][127:0]), .i_key(expanded_key[(4 * (NR + 1) * 32) - 1 -128*(NR - i) -:128]), .o_state(round_out[i-1][127:0]));

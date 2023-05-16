@@ -14,11 +14,7 @@
    * Date: 4/5/2023 
 */
 
-`include "../key_expansion.v"
-`include "../add_round_key.v"
-`include "sub_bytes.v"
-`include "shift_rows.v"
-`include "mix_columns.v"
+
 
 module cipher #(
     parameter NK = 4,
@@ -46,7 +42,7 @@ add_round_key add(.i_state(i_data), .i_key(expanded_key[(4 * (NR + 1) * 32) - 1 
 
 genvar i;
 generate
-    for(i = 1; i< NR ; i = i + 1) begin
+    for(i = 1; i< NR ; i = i + 1) begin : loop_cipher
         sub_bytes sub(.i_initial_state(temp_state[i-1][127:0]), .o_result_state(sub_out[i-1][127:0]));
         shift_rows shift(.i_state(sub_out[i-1][127:0]), .o_state(shift_out[i-1][127:0]));
         mix_columns mix(.i_state(shift_out[i-1][127:0]), .o_state(mix_out[i-1][127:0]));

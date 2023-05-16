@@ -9,8 +9,7 @@
    * Author: Adham Hussin
    * Date: 14/5/2023 
 */
-`include "Encryption/cipher.v"
-`include "slave_full.v"
+
 
 module AES (
     input reset,
@@ -25,6 +24,7 @@ module AES (
 
 
 reg [391:0] in_data;
+reg [391:0] in_data_next;
 
 wire [127:0] cipher_out_data_k1;
 wire [127:0] cipher_out_data_k2;
@@ -76,6 +76,7 @@ always@(posedge clk) begin
     end
     else begin
         state_reg <= state_next;
+        in_data = in_data_next;
     end
 end
 
@@ -89,7 +90,7 @@ always @(*) begin
         end
         FILL_DATA_ENC: begin
             if(temp_done) begin
-                in_data = data_out;
+                in_data_next = data_out;
                 state_next = SEND_DATA_ENC;
             end
         end
@@ -124,7 +125,7 @@ always @(*) begin
 
         FILL_DATA_DEC: begin
             if(temp_done) begin
-                in_data = data_out;
+                in_data_next = data_out;
                 state_next = SEND_DATA_DEC;
             end
         end
@@ -148,38 +149,38 @@ always @(*) begin
 end
 
 cipher #(4,10) k1 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:128]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:128]),
     .o_data(cipher_out_data_k1)
      );
 cipher #(6,12) k2 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:192]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:192]),
     .o_data(cipher_out_data_k2)
      );
 cipher #(8,14) k3 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:256]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:256]),
     .o_data(cipher_out_data_k3)
      );
 
 inv_cipher #(4,10) ik1 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:128]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:128]),
     .o_data(inv_cipher_out_data_k1)
      );
 inv_cipher #(6,12) ik2 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:192]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:192]),
     .o_data(inv_cipher_out_data_k2)
      );
 inv_cipher #(8,14) ik3 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:256]),
+    .i_data(in_data_next[391-:128]),
+    .i_key(in_data_next[255-:256]),
     .o_data(inv_cipher_out_data_k3)
      );
 
 assign done = temp_done;
 assign data_in_w[383 -: 128] = data_in;
-assign param = in_data[263-:8];
+assign param = in_data_next[263-:8];
 endmodule

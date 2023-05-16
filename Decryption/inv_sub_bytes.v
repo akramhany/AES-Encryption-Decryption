@@ -1,4 +1,3 @@
-`include "InvSBox.v"
 
 module inv_sub_bytes (
     input wire [127:0] i_initial_state,

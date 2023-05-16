@@ -31,7 +31,7 @@ integer i;
 always @(*) begin
     o_expanded_key = i_cypher_key;                      //assign the cypher key to the first N bits of the expanded key (N is the size of the cypher key)
 
-    for (i = NK; i < 4 * (NR + 1); i = i + 1) begin     //loop for the number of words generated in the expanded key
+    for (i = NK; i < 4 * (NR + 1); i = i + 1) begin : loop_expand    //loop for the number of words generated in the expanded key
 
         temp1 = o_expanded_key[31:0];                   //get the last word in the expanded key (the word number i - 1)
         o_expanded_key = o_expanded_key << 32;          //shift all the bits of the expanded key to the left by 32 bit

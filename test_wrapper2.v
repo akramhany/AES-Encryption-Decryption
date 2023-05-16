@@ -1,7 +1,11 @@
-`include "master_full.v"
-`include "AES.v"
 
-module test_wrapper2();
+
+module test_wrapper2(
+  input clk,
+  input reset,
+  input start_system,
+  output reg led
+);
 
 localparam PERIOD = 10;
 
@@ -31,10 +35,10 @@ reg [127:0] test_result_send;
 reg [391:0] test_result_recive;
 reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
 
-reg clk = 0;
-always #(PERIOD / 2) clk = ~clk;
 
-reg reset;
+
+
+
 reg start;
 wire buzy;
 wire done;
@@ -46,7 +50,7 @@ wire mosi;
 wire miso;
 wire sclk;
 
-reg start_system;
+
 reg [3:0] wrapper_state;
 reg [3:0] wrapper_state_next;
 reg [7:0] key_size;
@@ -190,30 +194,19 @@ case (wrapper_state)
 
     CHECK_DEC: begin
         if (test_result_recive[383 -: 128] == plane_text) begin
-            $display("OMGGGGGGGGGGGGGGGGGGGGGGG");
-            $display("%h",test_result_recive[383 -: 128]);
-            $display("%h",plane_text);
+            led = 1;
         end
         else begin
-            $display("Kill me please");
-            $display("%h",test_result_recive[383 -: 128]);
-            $display("%h",plane_text);
+            led = 0;
         end
            //TODO: delete this statement if you want the program to run normally
         wrapper_state_next = IDLE;
-        start_system = 0;
     end
 
 endcase
 end
 
-initial begin
-start_system = 1;
-reset = 1;
 
-#(5 * PERIOD) reset = 0;
-
-end
 
 
 

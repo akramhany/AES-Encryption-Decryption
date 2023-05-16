@@ -42,7 +42,7 @@ endfunction
 
 genvar i;
 generate
-	for (i = 15; i > -1; i = i - 1) begin //traversing on each byte 
+	for (i = 15; i > -1; i = i - 1) begin : loop_inv_mix //traversing on each byte 
         assign o_state[(i*8 + 7) : i*8] =   (i%4 == 3) ?  by9(i_state[i/4 *32 + 7: i/4 *32]) ^ byD(i_state[i/4 *32 +15: i/4 *32 + 8]) ^ byB(i_state[i/4 *32 +23: i/4 *32 + 16]) ^ byE(i_state[i/4 *32 +31: i/4 *32 + 24]): //if i in 1st row
                                             (i%4 == 2) ?  byD(i_state[i/4 *32 + 7: i/4 *32]) ^ byB(i_state[i/4 *32 +15: i/4 *32 + 8]) ^ byE(i_state[i/4 *32 +23: i/4 *32 + 16]) ^ by9(i_state[i/4 *32 +31: i/4 *32 + 24]): //        2nd row
                                             (i%4 == 1) ?  byB(i_state[i/4 *32 + 7: i/4 *32]) ^ byE(i_state[i/4 *32 +15: i/4 *32 + 8]) ^ by9(i_state[i/4 *32 +23: i/4 *32 + 16]) ^ byD(i_state[i/4 *32 +31: i/4 *32 + 24]): //        3rd row

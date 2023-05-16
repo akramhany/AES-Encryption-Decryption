@@ -29,7 +29,31 @@ wire [127:0] enc_text;
 assign enc_text = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
 reg [127:0] test_result_send;
 reg [391:0] test_result_recive;
-reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+
+/// for testing, sending and reciving data/////////////////////////////////////////////////////
+reg [1:0] test_number = 2'd0;
+
+wire [127:0] ciphered_text;
+assign ciphered_text = (test_number == 2'd1) ? 128'h69c4e0d86a7b0430d8cdb78070b4c55a:
+      (test_number == 2'd2) ? 128'hdda97ca4864cdfe06eaf70a0ec0d7191:
+      (test_number == 2'd3) ? 128'h8ea2b7ca516745bfeafc49904b496089;
+
+wire [127:0] plane_text;
+assign plane_text = 128'h00112233445566778899aabbccddeeff;
+reg [127:0] test_result_send;
+
+wire [255:0] key;
+assign key = (test_number == 2'd1) ? 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000:
+      (test_number == 2'd2) ? 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000:
+      (test_number == 2'd3) ? 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+
+
+wire [7:0] key_size;
+assign key_size = (test_number == 2'd1) ? 8'd16:
+      (test_number == 2'd2) ? 8'd24:
+      (test_number == 2'd3) ? 8'd32;
+      
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 reg clk = 0;
 always #(PERIOD / 2) clk = ~clk;
@@ -49,7 +73,6 @@ wire sclk;
 reg start_system;
 reg [3:0] wrapper_state;
 reg [3:0] wrapper_state_next;
-reg [7:0] key_size;
 
 master_full dut (
   .reset(reset),
@@ -86,29 +109,21 @@ always @(posedge clk) begin
   end
   //TODO: put a condition to check if the start_system is 0 (make it asyncho)
 end
-/*
-always @ (posedge clk) begin
-counter = counter + 1;
-end
 
-always @(posedge counter[8] ) begin
-if(start)
-  start = 1'b0; 
-end*/
 
 always @ (*)  begin
 
 case (wrapper_state)
     
     IDLE: begin
-
+      test_number = test_number + 1'b1;
         start = 0;
         data_in = 8'h00;
-        key_size = SIZE_192;
+        
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
             wrapper_state_next = SEND_ENC;
-            data_in = {plane_text, key_size, key};
+            data_in = {plane_text, key_size, keys[test_number]};
             start = 1;
         end
     end
@@ -142,7 +157,7 @@ case (wrapper_state)
     end
 
     CHECK_ENC: begin
-        if (test_result_recive[383 -: 128] == enc_text) begin
+        if (test_result_recive[383 -: 128] == ciphered_text[test_number]) begin
             $display("Finallyyyyyyyyyyyyyy");
             $display("%h",test_result_recive[383 -: 128]);
             $display("%h",plane_text);
@@ -152,7 +167,7 @@ case (wrapper_state)
         end
            //TODO: delete this statement if you want the program to run normally
         wrapper_state_next = SEND_DEC;
-        data_in = {test_result_recive[383 -: 128], key_size, key};    
+        data_in = {test_result_recive[383 -: 128], key_size, keys[test_number]};    
     end
 
     SEND_DEC: begin

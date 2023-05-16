@@ -33,14 +33,15 @@ localparam CHECK_DEC = 3'b110;
 
 //localparam BigReg = key_size
 
-/// for testing, sending and reciving data
+/// for testing, sending and reciving data/////////////////////////////////////////////////////
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
 wire [127:0] enc_text;
 assign enc_text = 128'h8ea2b7ca516745bfeafc49904b496089;
 reg [127:0] test_result_send;
-reg [127:0] test_result_recive;
+reg [127:0] test_result_recive[1:3];
 reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+//////////////////////////////////////////////////////////////////////////////////////////////
 
 
 reg clk = 0;
@@ -100,6 +101,7 @@ always @(posedge clk) begin
 end
 
 reg [6:0] i = 0;
+reg [1:0] test_number = 1'b1;
 
 reg [4:0] counter = 0;
 always @ (posedge start) begin
@@ -113,10 +115,22 @@ if(start)
   start = 1'b0; 
 end
 
-reg [4:0] receive_counter = 0;
+reg [2:0] receive_counter = 0;
+reg receive_order = 0;
 
 always @ (posedge clk)  begin
+    receive_counter = receive_counter + 1;
+end
+always @(posedge receive_counter[2]) begin
+    if(start && enc_sending) begin
+        receive_order = 1'b0;
+        start = 1'b0;
+    end
+    if (slave_done == 0 && receive_order)
+        start = 1'b1;
+end
 
+always @ (posedge clk)  begin
 case (wrapper_state)
     
     IDLE: begin
@@ -148,7 +162,7 @@ case (wrapper_state)
                 data_in = key[(i + 1) * 8 - 1 -: 8];
                 if (i == 0) begin
                     wrapper_state = REC_ENC;
-                    i = 17;
+                    i = 20;
                 end
                 i = i - 1;
             end
@@ -163,14 +177,13 @@ case (wrapper_state)
 
         if (enc_sending) begin
             if (i > 0) begin
-                if (i == 16) begin
-                    start = 1;
-                    test_result_recive[i * 8 - 1 -: 8] = data_out;
+                if (i == 19) begin
+                    receive_order = 1;
                     i = i - 1;
                 end
                 else if (slave_done) begin
-                    start = 1;
-                    test_result_recive[i * 8 - 1 -: 8] = data_out;
+                    receive_order = 1;
+                    test_result_recive[test_number][(i) * 8 - 1 -: 8] = data_out;
                     i = i - 1;
                   
                 end
@@ -183,7 +196,7 @@ case (wrapper_state)
     end
 
     CHECK_ENC: begin
-        if (test_result_recive == enc_text) begin
+        if (test_result_recive[test_number] == enc_text) begin
             $display("Finallyyyyyyyyyyyyyy");
         end
         else begin
@@ -191,6 +204,7 @@ case (wrapper_state)
         end
         start_system = 0;   //TODO: delete this statement if you want the program to run normally
         wrapper_state = IDLE;
+        test_number = test_number + 1'b1;
     end
 
 endcase
@@ -203,7 +217,5 @@ reset = 1;
 #(5 * PERIOD) reset = 0;
 
 end
-
-
 
 endmodule

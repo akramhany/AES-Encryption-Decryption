@@ -30,10 +30,10 @@ localparam WAIT_DEC2 = 4'b1001;
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
 wire [127:0] enc_text;
-assign enc_text = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
+assign enc_text = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
 reg [127:0] test_result_send;
 reg [391:0] test_result_recive;
-reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
 
 
 
@@ -108,7 +108,7 @@ case (wrapper_state)
 
         start = 0;
         data_in = 8'h00;
-        key_size = SIZE_192;
+        key_size = SIZE_128;
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
             wrapper_state_next = SEND_ENC;

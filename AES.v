@@ -34,6 +34,11 @@ wire [127:0] inv_cipher_out_data_k1;
 wire [127:0] inv_cipher_out_data_k2;
 wire [127:0] inv_cipher_out_data_k3;
 
+wire [1407:0]o_expanded_key_1;
+wire [1663:0]o_expanded_key_2;
+wire [1919:0]o_expanded_key_3;
+reg [1919:0]selected_key;
+
 
 
 wire temp_done;
@@ -72,11 +77,23 @@ always@(posedge clk) begin
     if(reset) begin
         in_data = 0;
         state_reg <= 2'b0;
+        selected_key = 0;
 
     end
     else begin
         state_reg <= state_next;
         in_data = in_data_next;
+        case(param)
+            8'd16: begin
+                selected_key = {o_expanded_key_1, 512'b0};
+            end
+            8'd24: begin
+                selected_key = {o_expanded_key_2, 256'b0};
+            end
+            8'd32: begin
+                selected_key = o_expanded_key_3;
+            end
+        endcase
     end
 end
 
@@ -96,17 +113,7 @@ always @(*) begin
         end
         SEND_DATA_ENC: begin
             if(temp_done) begin
-                case(param)
-                    8'd16: begin
-                        data_in = cipher_out_data_k1;
-                    end
-                    8'd24: begin
-                        data_in = cipher_out_data_k2;
-                    end
-                    8'd32: begin
-                        data_in = cipher_out_data_k3;
-                    end
-                endcase
+                data_in = cipher_out_data_k1;
                 state_next = WAIT1;
             end
         end
@@ -131,54 +138,42 @@ always @(*) begin
         end
         SEND_DATA_DEC: begin
             if(temp_done) begin
-                case(param)
-                    8'd16: begin
-                        data_in = inv_cipher_out_data_k1;
-                    end
-                    8'd24: begin
-                        data_in = inv_cipher_out_data_k2;
-                    end
-                    8'd32: begin
-                        data_in = inv_cipher_out_data_k3;
-                    end
-                endcase
+                data_in = inv_cipher_out_data_k1;
                 state_next = IDLE;
             end
         end
     endcase
 end
 
-cipher #(4,10) k1 (
+cipher  k1 (
     .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:128]),
+    .expanded_key(selected_key),
+    .NR(param/4 + 6),
     .o_data(cipher_out_data_k1)
      );
-cipher #(6,12) k2 (
-    .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:192]),
-    .o_data(cipher_out_data_k2)
-     );
-cipher #(8,14) k3 (
-    .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:256]),
-    .o_data(cipher_out_data_k3)
-     );
 
-inv_cipher #(4,10) ik1 (
+inv_cipher k2 (
     .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:128]),
+    .expanded_key(selected_key),
+    .NR(param/4 + 6),
     .o_data(inv_cipher_out_data_k1)
      );
-inv_cipher #(6,12) ik2 (
-    .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:192]),
-    .o_data(inv_cipher_out_data_k2)
-     );
-inv_cipher #(8,14) ik3 (
-    .i_data(in_data_next[391-:128]),
-    .i_key(in_data_next[255-:256]),
-    .o_data(inv_cipher_out_data_k3)
-     );
+
+key_expansion #(.NK(4), .NR(10)) ke128 (
+    .i_cypher_key(in_data_next[255 -:128]),
+    .o_expanded_key(o_expanded_key_1)
+);
+// key_expansion #(.NK(6), .NR(12)) ke192 (
+//     .i_cypher_key(in_data_next[255 -:192]),
+//     .o_expanded_key(o_expanded_key_2)
+// );
+// key_expansion #(.NK(8), .NR(14)) ke256 (
+//     .i_cypher_key(in_data_next[255 -:256]),
+//     .o_expanded_key(o_expanded_key_3)
+// );
+
+
+
 
 assign done = temp_done;
 assign data_in_w[383 -: 128] = data_in;

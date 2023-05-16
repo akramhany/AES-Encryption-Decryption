@@ -10,15 +10,10 @@ localparam SIZE_192 = 8'd24;
 localparam SIZE_256 = 8'd32;
 
 localparam IDLE = 4'b0000;
-localparam SEND_ENC = 4'b0001;
-localparam WAIT_ENC = 4'b0010;
-localparam REC_ENC = 4'b0011;
-localparam CHECK_ENC = 4'b0100;
-localparam SEND_DEC = 4'b0101;
-localparam WAIT_DEC1 = 4'b0110;
-localparam REC_DEC = 4'b0111;
-localparam CHECK_DEC = 4'b1000;
-localparam WAIT_DEC2 = 4'b1001;
+localparam SEND = 4'b0001;
+localparam WAIT = 4'b0010;
+localparam REC = 4'b0011;
+localparam CHECK = 4'b0100;
 
 //localparam BigReg = key_size
 
@@ -26,10 +21,11 @@ localparam WAIT_DEC2 = 4'b1001;
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
 wire [127:0] enc_text;
-assign enc_text = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
+
 reg [127:0] test_result_send;
 reg [391:0] test_result_recive;
-reg [255:0] key = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+
+wire [255:0] key;
 
 reg clk = 0;
 always #(PERIOD / 2) clk = ~clk;
@@ -49,7 +45,7 @@ wire sclk;
 reg start_system;
 reg [3:0] wrapper_state;
 reg [3:0] wrapper_state_next;
-reg [7:0] key_size;
+wire [7:0] key_size;
 
 master_full dut (
   .reset(reset),
@@ -75,6 +71,9 @@ AES aes(
     .done(slave_done)
 ); 
 
+reg [1:0] counter = 0;
+
+reg [2:0] counter_2 = 0;
 
 always @(posedge clk) begin
 
@@ -83,18 +82,14 @@ always @(posedge clk) begin
   end
   else begin
     wrapper_state   <= wrapper_state_next;
+    if (wrapper_state == CHECK) begin
+      counter <= counter + 1;
+    end
   end
   //TODO: put a condition to check if the start_system is 0 (make it asyncho)
 end
-/*
-always @ (posedge clk) begin
-counter = counter + 1;
-end
 
-always @(posedge counter[8] ) begin
-if(start)
-  start = 1'b0; 
-end*/
+
 
 always @ (*)  begin
 
@@ -104,44 +99,51 @@ case (wrapper_state)
 
         start = 0;
         data_in = 8'h00;
-        key_size = SIZE_192;
-        //TODO: create another reg of size 256 to store the key in it
+        if (counter == 2'b10) begin
+            start_system = 0;
+        end
         if (start_system && ~reset) begin
-            wrapper_state_next = SEND_ENC;
+            wrapper_state_next = SEND;
             data_in = {plane_text, key_size, key};
             start = 1;
+            counter_2 = counter_2 + 1;
         end
     end
 
-    SEND_ENC: begin
+    SEND: begin
         start = 0;
         if (done) begin
           start = 1;
-          wrapper_state_next = WAIT_ENC;
+          wrapper_state_next = WAIT;
         end
 
     end
 
-    WAIT_ENC: begin
+    WAIT: begin
         start = 0;
 
         if (done) begin
           start = 1;
-          wrapper_state_next = REC_ENC;    
+          wrapper_state_next = REC; 
         end
     end
 
-    REC_ENC: begin
+    REC: begin
         start = 0;
 
         if (done) begin
           start = 1;
           test_result_recive = data_out;
-          wrapper_state_next = CHECK_ENC;    
+          wrapper_state_next = CHECK;
+        end
+        else if (counter_2 == 3'b010) begin
+          wrapper_state_next = WAIT;
+          counter_2 = 0;
         end
     end
 
-    CHECK_ENC: begin
+    CHECK: begin
+        start = 0;
         if (test_result_recive[383 -: 128] == enc_text && test_result_recive[255 -: 128] == plane_text) begin
             $display("Finallyyyyyyyyyyyyyy");
             $display("%h",test_result_recive[383 -: 256]);
@@ -149,62 +151,11 @@ case (wrapper_state)
         end
         else begin
             $display("Kill me please");
+            $display("%d", $time);
         end
            //TODO: delete this statement if you want the program to run normally
         wrapper_state_next = IDLE;
-        data_in = {test_result_recive[383 -: 128], key_size, key};
-        start_system = 0;    
     end
-
-    // SEND_DEC: begin
-    //   start = 0;
-    //   if (done) begin
-    //     start = 1;
-    //     wrapper_state_next = WAIT_DEC1;
-    //   end
-    // end
-
-    // WAIT_DEC1: begin
-    //     start = 0;
-    //     if (done) begin
-    //       start = 1;
-    //       wrapper_state_next = WAIT_DEC2;    
-    //     end
-    // end
-
-    // WAIT_DEC2: begin
-    //     start = 0;
-    //     if (done) begin
-    //       start = 1;
-    //       wrapper_state_next = REC_DEC;    
-    //     end
-    // end
-
-    // REC_DEC: begin
-    //     start = 0;
-    //     if (done) begin
-    //       start = 1;
-    //       test_result_recive = data_out;
-    //       wrapper_state_next = CHECK_DEC;
-    //     end 
-    // end
-
-    // CHECK_DEC: begin
-    //     if (test_result_recive[383 -: 128] == plane_text) begin
-    //         $display("OMGGGGGGGGGGGGGGGGGGGGGGG");
-    //         $display("%h",test_result_recive[383 -: 128]);
-    //         $display("%h",plane_text);
-    //     end
-    //     else begin
-    //         $display("Kill me please");
-    //         $display("%h",test_result_recive[383 -: 128]);
-    //         $display("%h",plane_text);
-    //     end
-    //        //TODO: delete this statement if you want the program to run normally
-    //     wrapper_state_next = IDLE;
-    //     start_system = 0;
-    // end
-
 endcase
 end
 
@@ -216,6 +167,17 @@ reset = 1;
 
 end
 
+assign key_size = (counter == 2'b00) ? SIZE_128 : 
+(counter == 2'b01) ? SIZE_192 :
+(counter == 2'b10) ? SIZE_256 : 128'h0;
+
+assign enc_text = (counter == 2'b00) ? 128'h69c4e0d86a7b0430d8cdb78070b4c55a :
+(counter == 2'b01) ? 128'hdda97ca4864cdfe06eaf70a0ec0d7191 :
+(counter == 2'b10) ? 128'h8ea2b7ca516745bfeafc49904b496089 : 128'h0;
+
+assign key = (counter == 2'b00) ? 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000 :
+(counter == 2'b01) ? 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000 :
+(counter == 2'b10) ? 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f : 256'h0;
 
 
 endmodule

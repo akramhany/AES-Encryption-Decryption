@@ -11,7 +11,8 @@
 */
 `include "Encryption/cipher.v"
 `include "slave_full.v"
-module encrypt (
+
+module AES (
     input reset,
     input cs,          
     input clk,
@@ -39,8 +40,8 @@ wire temp_done;
 wire [391:0] data_out;
 wire [391:0] data_in_w;
 reg [127:0] data_in;
-reg [1:0] state_reg;
-reg [1:0] state_next;
+reg [2:0] state_reg;
+reg [2:0] state_next;
 
 wire [7:0]param;
 
@@ -49,6 +50,8 @@ localparam FILL_DATA_ENC    = 3'b001;
 localparam FILL_DATA_DEC    = 3'b010; 
 localparam SEND_DATA_ENC    = 3'b011;
 localparam SEND_DATA_DEC    = 3'b100;
+localparam WAIT1            = 3'b101;
+localparam WAIT2            = 3'b110; 
 
 
 
@@ -103,9 +106,22 @@ always @(*) begin
                         data_in = cipher_out_data_k3;
                     end
                 endcase
+                state_next = WAIT1;
+            end
+        end
+
+        WAIT1: begin
+            if(temp_done) begin
+                state_next = WAIT2;
+            end
+        end
+
+        WAIT2: begin
+            if(temp_done) begin
                 state_next = FILL_DATA_DEC;
             end
         end
+
         FILL_DATA_DEC: begin
             if(temp_done) begin
                 in_data = data_out;
@@ -164,6 +180,6 @@ inv_cipher #(8,14) ik3 (
      );
 
 assign done = temp_done;
-assign data_in_w[391 -: 128] = data_in;
+assign data_in_w[383 -: 128] = data_in;
 assign param = in_data[263-:8];
 endmodule

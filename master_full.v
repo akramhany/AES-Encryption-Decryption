@@ -152,7 +152,8 @@ assign mosi = mosi_reg;       // master output slave input (1-bit)
 // sends the clock every two cycles only when state is transfer
 assign sclk = ~sclk_reg[1] & (state_reg == TRANSFER);     // serial clock (1-bit)
 assign buzy = (state_reg != IDLE);  // busy is high if state is transfer or wait
-assign data_out = (done == 1) ? data_out_reg : data_out;    
+assign data_out =  data_out_reg;    
 assign cs = cs_reg;           // chip select active low
+assign done = done_reg;       // done signal
 
 endmodule

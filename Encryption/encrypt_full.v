@@ -18,7 +18,7 @@ module encrypt (
     input sclk,             
     input mosi,       
     output miso,
-    output done, 
+    output done 
 );
 
 

@@ -94,10 +94,10 @@ initial begin
   // we should act on slave done not master done
   // or we should change how master done reacts
   ////////////////////////////////////
-  @(slave_done);
+  @(done);
 
   // Wait
-  #(5 * PERIOD);
+  //#(5 * PERIOD);
 
   // Check data
   $display("data sent from master to slave: %h", data_in);
@@ -123,10 +123,10 @@ initial begin
   #(2 * PERIOD) start = 0;
 
   // Wait for done
-  @(slave_done);
+  @(done);
 
   // Wait
-  #(5 * PERIOD);
+  // #(5 * PERIOD);
 
   // Check data
   $display("data sent from master to slave: %h", data_in);
@@ -152,10 +152,10 @@ initial begin
   #(2 * PERIOD) start = 0;
 
   // Wait for done
-  @(slave_done);
+  @(done);
 
   // Wait
-  #(5 * PERIOD);
+  // #(5 * PERIOD);
 
   // Check data
   $display("data sent from master to slave: %h", data_in);
@@ -180,10 +180,10 @@ initial begin
   #(2 * PERIOD) start = 1;
   #(2 * PERIOD) start = 0;
 
-  @(slave_done);
+  @(done);
 
   // Wait
-  #(5 * PERIOD);
+  // #(5 * PERIOD);
 
   // Check data
   $display("data sent from master to slave: %h", data_in);

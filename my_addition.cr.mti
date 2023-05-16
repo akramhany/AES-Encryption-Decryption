@@ -1,0 +1,16 @@
+{D:/Ahmed/CMP 26/2nd term/Logic/term Project/tests/my_addition/Encryption/encrypt.v} {1 {vlog -work work -stats=none {D:/Ahmed/CMP 26/2nd term/Logic/term Project/tests/my_addition/Encryption/encrypt.v}
+Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+-- Compiling module key_expansion
+-- Compiling module add_round_key
+-- Compiling module SBox
+-- Compiling module sub_bytes
+-- Compiling module shift_rows
+-- Compiling module mix_columns
+-- Compiling module cipher
+-- Compiling module slave
+-- Compiling module encrypt
+
+Top level modules:
+	encrypt
+
+} {} {}}

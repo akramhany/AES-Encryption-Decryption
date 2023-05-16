@@ -13,6 +13,7 @@
 */
 
 `include "master.v"
+`include "Decryption/decrypt.v"
 `include "Encryption/encrypt.v"
 
 module test_wrapper();
@@ -34,6 +35,8 @@ localparam CHECK_DEC = 3'b110;
 localparam key_128 = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
 localparam key_192 = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
 localparam key_256 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+
+reg [256:0] keys [1:3];
 
 localparam ciphered_text_128 = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
 localparam ciphered_text_192 = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
@@ -146,6 +149,9 @@ case (wrapper_state)
         data_in = 8'h00;
         key_size = SIZE_128;
         i = SIZE_256 + 16;
+        keys[1] = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
+        keys[2] = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
+        keys[3] = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
             wrapper_state = SEND_ENC;

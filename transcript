@@ -1,0 +1,735 @@
+# Compile of test_wrapper.v was successful.
+# Compile of encrypt.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim -gui work.test_wrapper
+# vsim -gui work.test_wrapper 
+# Start time: 03:35:08 on May 16,2023
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+add wave -position insertpoint  \
+sim:/test_wrapper/test_result_recive
+add wave -position insertpoint  \
+sim:/test_wrapper/clk
+add wave -position insertpoint  \
+sim:/test_wrapper/reset
+add wave -position insertpoint  \
+sim:/test_wrapper/start
+add wave -position insertpoint  \
+sim:/test_wrapper/slave_done
+add wave -position insertpoint  \
+sim:/test_wrapper/enc_sending
+add wave -position insertpoint  \
+sim:/test_wrapper/wrapper_state
+add wave -position insertpoint  \
+sim:/test_wrapper/i
+add wave -position insertpoint  \
+sim:/test_wrapper/receive_counter
+add wave -position insertpoint  \
+sim:/test_wrapper/dut/data_in
+add wave -position insertpoint  \
+sim:/test_wrapper/dut/data_out
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/c1
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/c3
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/enc_slave/data_out
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/enc_slave/data_in
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/cipher_out_data_k3
+run
+# Kill me please
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/state_reg
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+restart
+run -continue
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+add wave -position insertpoint  \
+sim:/test_wrapper/receive_order
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+run
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+run
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+run
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful with warnings.
+# Compile of test_wrapper.v was successful with warnings.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful with warnings.
+# Compile of test_wrapper.v was successful with warnings.
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+run
+# Kill me please
+run
+run
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+add wave -position insertpoint  \
+sim:/test_wrapper/test_number
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+add wave -position insertpoint  \
+sim:/test_wrapper/encrypt_file/in_data
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# WARNING: No extended dataflow license exists
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful.
+# Compile of encrypt.v was successful.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+add wave -position insertpoint  \
+sim:/test_wrapper/key_size
+restart
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Kill me please
+# Compile of test_wrapper.v was successful.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful with warnings.
+run
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.decrypt
+# Loading work.slave
+# Loading work.inv_cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v failed with 2 errors.
+# Compile of test_wrapper.v was successful with warnings.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.decrypt
+# Loading work.slave
+# Loading work.inv_cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy
+# Compile of test_wrapper.v was successful with warnings.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper
+# Loading work.master
+# Loading work.encrypt
+# Loading work.slave
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Finallyyyyyyyyyyyyyy

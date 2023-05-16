@@ -32,23 +32,14 @@ localparam SEND_DEC = 3'b100;
 localparam REC_DEC = 3'b101;
 localparam CHECK_DEC = 3'b110;
 
-localparam key_128 = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
-localparam key_192 = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
-localparam key_256 = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
-
 reg [256:0] keys [1:3];
-
-localparam ciphered_text_128 = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
-localparam ciphered_text_192 = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
-localparam ciphered_text_256 = 128'h8ea2b7ca516745bfeafc49904b496089;
+reg [128:0] ciphered_text [1:3];
 
 //localparam BigReg = key_size
 
 /// for testing, sending and reciving data/////////////////////////////////////////////////////
 wire [127:0] plane_text;
 assign plane_text = 128'h00112233445566778899aabbccddeeff;
-wire [127:0] enc_text;
-assign enc_text = ciphered_text_128;
 reg [127:0] test_result_send;
 reg [127:0] test_result_recive[1:3];
 reg [255:0] key = key_128;
@@ -152,6 +143,9 @@ case (wrapper_state)
         keys[1] = 256'h000102030405060708090a0b0c0d0e0f00000000000000000000000000000000;
         keys[2] = 256'h000102030405060708090a0b0c0d0e0f10111213141516170000000000000000;
         keys[3] = 256'h000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f;
+        ciphered_text[1] = 128'h69c4e0d86a7b0430d8cdb78070b4c55a;
+        ciphered_text[2] = 128'hdda97ca4864cdfe06eaf70a0ec0d7191;
+        ciphered_text[3] = 128'h8ea2b7ca516745bfeafc49904b496089;
         //TODO: create another reg of size 256 to store the key in it
         if (start_system && ~reset) begin
             wrapper_state = SEND_ENC;
@@ -209,7 +203,7 @@ case (wrapper_state)
     end
 
     CHECK_ENC: begin
-        if (test_result_recive[test_number] == enc_text) begin
+        if (test_result_recive[test_number] == ciphered_text[test_number]) begin
             $display("Finallyyyyyyyyyyyyyy");
         end
         else begin

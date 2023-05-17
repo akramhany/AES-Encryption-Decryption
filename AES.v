@@ -47,7 +47,7 @@ wire [391:0] data_in_w;
 reg [127:0] data_in;
 reg [2:0] state_reg;
 reg [2:0] state_next;
-
+reg sync;
 wire [7:0]param;
 
 localparam IDLE             = 3'b000; 
@@ -109,10 +109,13 @@ always @(*) begin
             if(temp_done) begin
                 in_data_next = data_out;
                 state_next = SEND_DATA_ENC;
+                sync = 1;
             end
         end
         SEND_DATA_ENC: begin
+            sync =0;
             if(temp_done) begin
+
                 data_in = cipher_out_data_k1;
                 state_next = WAIT1;
             end
@@ -149,6 +152,8 @@ cipher  k1 (
     .i_data(in_data_next[391-:128]),
     .expanded_key(selected_key),
     .NR(param/4 + 6),
+    .clk(clk),
+    .sync(sync),
     .o_data(cipher_out_data_k1)
      );
 

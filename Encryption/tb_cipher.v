@@ -40,9 +40,7 @@ initial begin
 end
 always #5 clk = ~clk;
 
-always @(*) begin
-    $display("i_key = %h, i_data = %h, o_data = %h", i_key, i_data, o_data);
-end
+
 
 initial begin
     #1100;
@@ -52,6 +50,7 @@ initial begin
     else begin
         $display("Test Failed: Expected output = %h, Actual output = %h", expected_output, o_data);
     end
+    $display("i_key = %h, i_data = %h, o_data = %h", i_key, i_data, o_data);
     $finish;
 end
 endmodule

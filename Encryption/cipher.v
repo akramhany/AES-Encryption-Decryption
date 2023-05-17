@@ -45,18 +45,19 @@ module cipher (
     else if (counter < NR-1) begin
       temp_state1 <= temp_state2;
       expanded_key_temp <= expanded_key_temp << 128;
-      $display("%h", temp_state2);
+      counter <= counter + 1;
     end
-    counter <= counter + 1;
+
+    
   end
 
 wire [127:0]sub_out2;
 wire [127:0]shift_out2;
 wire [127:0]key_out_f;
 
-sub_bytes sub2(.i_initial_state(temp_state2), .o_result_state(sub_out2));
+sub_bytes sub2(.i_initial_state(temp_state1), .o_result_state(sub_out2));
 shift_rows shift2(.i_state(sub_out2), .o_state(shift_out2));
-add_round_key add3(.i_state(shift_out2), .i_key(expanded_key[1791 -: 128]), .o_state(key_out_f));
+add_round_key add3(.i_state(shift_out2), .i_key(expanded_key_temp[1791 -: 128]), .o_state(key_out_f));
 
 assign o_data = key_out_f;
 endmodule

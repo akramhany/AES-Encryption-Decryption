@@ -3,7 +3,7 @@
 # 2 compiles, 0 failed with no errors.
 vsim -gui work.test_wrapper2
 # vsim -gui work.test_wrapper2 
-# Start time: 03:27:01 on May 17,2023
+# Start time: 08:39:14 on May 17,2023
 # Loading work.test_wrapper2
 # Loading work.master_full
 # Loading work.AES
@@ -21,194 +21,206 @@ vsim -gui work.test_wrapper2
 # Loading work.mix_columns
 # Loading work.inv_mix_columns
 run
-run
 # Finallyyyyyyyyyyyyyy
 # 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
 # 00112233445566778899aabbccddeeff
-run
-run
 # Finallyyyyyyyyyyyyyy
 # dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
 # 00112233445566778899aabbccddeeff
-run
-run
-run
+# Finallyyyyyyyyyyyyyy
+# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Compile of test_wrapper2.v was successful with warnings.
 run
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1: PASSED
+# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Test Case 2: PASSED
+# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Test Case 3: PASSED
+# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Compile of test_wrapper2.v was successful with warnings.
+run -all
+run
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1: PASSED
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Test Case 2: PASSED
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Test Case 3: PASSED
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Compile of test_wrapper2.v was successful with warnings.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:          10
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:          18
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:          20
+# testcase PASSED
+# ==================================================================
+# Compile of test_wrapper2.v was successful with warnings.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run -all
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           16 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           24 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           32 bytes
+# testcase PASSED
+# ==================================================================
 add wave -position insertpoint sim:/test_wrapper2/*
 # ** Warning: (vsim-WLF-5000) WLF file currently in use: vsim.wlf
 #           File in use by: RTX  Hostname: ALADDIN  ProcessID: 18456
-#           Attempting to use alternate WLF file "./wlftwzrc36".
+#           Attempting to use alternate WLF file "./wlft9mg0v9".
 # ** Warning: (vsim-WLF-5001) Could not open WLF file: vsim.wlf
-#           Using alternate file: ./wlftwzrc36
+#           Using alternate file: ./wlft9mg0v9
 restart
 # ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
 run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-run
-run
-run
-run
-run
-run
-run
-add wave -position insertpoint  \
-sim:/test_wrapper2/aes/data_in
-restart
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-run
-add wave -position insertpoint  \
-sim:/test_wrapper2/data_out
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-run
-run
-run
-run
-run
-run
-run
-run
-run
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Kill me please
-#               157155
-run
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           16 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           24 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           32 bytes
+# testcase PASSED
+# ==================================================================
 # Compile of AES.v was successful with warnings.
 # Compile of test_wrapper2.v was successful with warnings.
 # 2 compiles, 0 failed with no errors.
@@ -231,344 +243,30 @@ restart
 # Loading work.mix_columns
 # Loading work.inv_mix_columns
 run
-# Kill me please
-#                47145
-# Compile of AES.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-cls
-# 
-run
-# Kill me please
-#                47185
-# Compile of test_wrapper2.v was successful with warnings.
-
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Kill me please
-#                47185
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-run
-run
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-# Warning in wave window restart: (vish-4014) No objects found matching '/test_wrapper2/reset'. 
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-run
-run
-run
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-run
-run
-run
-run
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-run
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-# Warning in wave window restart: (vish-4014) No objects found matching '/test_wrapper2/counter_2'. 
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Compile of test_wrapper2.v was successful with warnings.
-restart
-# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
-# Loading work.test_wrapper2
-# Loading work.master_full
-# Loading work.AES
-# Loading work.slave_full
-# Loading work.cipher
-# Loading work.key_expansion
-# Loading work.add_round_key
-# Loading work.sub_bytes
-# Loading work.SBox
-# Loading work.shift_rows
-# Loading work.inv_cipher
-# Loading work.inv_shift_rows
-# Loading work.inv_sub_bytes
-# Loading work.InvSBox
-# Loading work.mix_columns
-# Loading work.inv_mix_columns
-run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           16 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           24 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           32 bytes
+# testcase PASSED
+# ==================================================================
 # Compile of AES.v was successful with warnings.
 # Compile of test_wrapper2.v was successful with warnings.
 # 2 compiles, 0 failed with no errors.
@@ -591,12 +289,73 @@ restart
 # Loading work.mix_columns
 # Loading work.inv_mix_columns
 run
-# Finallyyyyyyyyyyyyyy
-# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
-# Finallyyyyyyyyyyyyyy
-# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
-# 00112233445566778899aabbccddeeff
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           16 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           24 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           32 bytes
+# testcase PASSED
+# ==================================================================
+# Compile of AES.v was successful with warnings.
+# Compile of test_wrapper2.v was successful with warnings.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run
+# GetModuleFileName: The specified module could not be found.
+# 
+# 
+# Test Case 1:
+# Ciphered TEXT:     69c4e0d86a7b0430d8cdb78070b4c55a
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           16 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 2:
+# Ciphered TEXT:     dda97ca4864cdfe06eaf70a0ec0d7191
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           24 bytes
+# testcase PASSED
+# ==================================================================
+# Test Case 3:
+# Ciphered TEXT:     8ea2b7ca516745bfeafc49904b496089
+# Inv Ciphered TEXT: 00112233445566778899aabbccddeeff
+# PLAIN TEXT:        00112233445566778899aabbccddeeff
+# KEY SIZE:           32 bytes
+# testcase PASSED
+# ==================================================================

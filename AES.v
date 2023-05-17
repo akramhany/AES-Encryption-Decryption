@@ -137,9 +137,11 @@ always @(*) begin
             if(temp_done) begin
                 in_data_next = data_out;
                 state_next = SEND_DATA_DEC;
+                sync = 1;
             end
         end
         SEND_DATA_DEC: begin
+        sync =0;
             if(temp_done) begin
                 data_in = inv_cipher_out_data_k1;
                 state_next = IDLE;
@@ -161,17 +163,19 @@ inv_cipher k2 (
     .i_data(in_data_next[391-:128]),
     .expanded_key(selected_key),
     .NR(param/4 + 6),
+    .clk(clk),
+    .sync(sync),
     .o_data(inv_cipher_out_data_k1)
      );
 
-key_expansion #(.NK(4), .NR(10)) ke128 (
-    .i_cypher_key(in_data_next[255 -:128]),
-    .o_expanded_key(o_expanded_key_1)
+//key_expansion #(.NK(4), .NR(10)) ke128 (
+//    .i_cypher_key(in_data_next[255 -:128]),
+//    .o_expanded_key(o_expanded_key_1)
+//);
+ key_expansion #(.NK(6), .NR(12)) ke192 (
+     .i_cypher_key(in_data_next[255 -:192]),
+     .o_expanded_key(o_expanded_key_2)
 );
-// key_expansion #(.NK(6), .NR(12)) ke192 (
-//     .i_cypher_key(in_data_next[255 -:192]),
-//     .o_expanded_key(o_expanded_key_2)
-// );
 // key_expansion #(.NK(8), .NR(14)) ke256 (
 //     .i_cypher_key(in_data_next[255 -:256]),
 //     .o_expanded_key(o_expanded_key_3)

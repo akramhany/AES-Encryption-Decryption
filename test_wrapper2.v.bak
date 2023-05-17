@@ -1,5 +1,4 @@
 
-
 module test_wrapper2(input clk, input start_system, input reset, output reg led);
 
 localparam PERIOD = 10;
@@ -26,9 +25,10 @@ reg [391:0] test_result_recive;
 
 wire [255:0] key;
 
+reg clk = 0;
+always #(PERIOD / 2) clk = ~clk;
 
-
-
+reg reset;
 reg start;
 wire buzy;
 wire done;
@@ -40,7 +40,7 @@ wire mosi;
 wire miso;
 wire sclk;
 
-
+reg start_system;
 reg [3:0] wrapper_state;
 reg [3:0] wrapper_state_next;
 wire [7:0] key_size;
@@ -77,6 +77,7 @@ always @(posedge clk) begin
 
   if (reset) begin        
     wrapper_state   <= IDLE;
+    led = 0;
   end
   else begin
     wrapper_state   <= wrapper_state_next;
@@ -98,7 +99,7 @@ case (wrapper_state)
         start = 0;
         data_in = 8'h00;
         if (counter == 2'b10) begin
-            wrapper_state_next = IDLE;
+            start_system = 0;
         end
         if (start_system && ~reset) begin
             wrapper_state_next = SEND;

@@ -1,3 +1,4 @@
+
 /*
    *
    * Module: encrypt
@@ -9,12 +10,10 @@
    * Author: Adham Hussin
    * Date: 14/5/2023 
 */
-`include "Encryption/cipher.v"
-`include "Decryption/inv_cipher.v"
-`include "slave_full.v"
+
 
 module AES (
-    input sync,
+    input reset,
     input cs,          
     input clk,
     input sclk,             
@@ -26,6 +25,7 @@ module AES (
 
 
 reg [391:0] in_data;
+reg [391:0] in_data_next;
 
 wire [127:0] cipher_out_data_k1;
 wire [127:0] cipher_out_data_k2;
@@ -45,7 +45,7 @@ reg [1919:0]selected_key;
 wire temp_done;
 wire [391:0] data_out;
 wire [391:0] data_in_w;
-reg [255:0] data_in;
+reg [127:0] data_in;
 reg [2:0] state_reg;
 reg [2:0] state_next;
 
@@ -63,7 +63,7 @@ localparam WAIT2            = 3'b110;
 
 
 slave_full enc_slave (
-   .reset(sync),
+   .reset(reset),
    .clk(clk),
    .cs(cs),
    .mosi(mosi),
@@ -75,13 +75,26 @@ slave_full enc_slave (
  );
 
 always@(posedge clk) begin
-    if(sync) begin
+    if(reset) begin
         in_data = 0;
         state_reg <= 2'b0;
+        selected_key = 0;
 
     end
     else begin
         state_reg <= state_next;
+        in_data = in_data_next;
+        case(param)
+            8'd16: begin
+                selected_key = {o_expanded_key_1, 512'b0};
+            end
+            8'd24: begin
+                selected_key = {o_expanded_key_2, 256'b0};
+            end
+            8'd32: begin
+                selected_key = o_expanded_key_3;
+            end
+        endcase
     end
 end
 
@@ -95,26 +108,38 @@ always @(*) begin
         end
         FILL_DATA_ENC: begin
             if(temp_done) begin
-                in_data = data_out;
+                in_data_next = data_out;
                 state_next = SEND_DATA_ENC;
             end
         end
         SEND_DATA_ENC: begin
             if(temp_done) begin
-                case(param)
-                    8'd16: begin
-                        data_in[255:128] = cipher_out_data_k1;
-                        data_in[127:0] = inv_cipher_out_data_k1;
-                    end
-                    8'd24: begin
-                        data_in[255:128] = cipher_out_data_k2;
-                        data_in[127:0] = inv_cipher_out_data_k2;
-                    end
-                    8'd32: begin
-                        data_in[255:128] = cipher_out_data_k3;
-                        data_in[127:0] = inv_cipher_out_data_k3;
-                    end
-                endcase
+                data_in = cipher_out_data_k1;
+                state_next = WAIT1;
+            end
+        end
+
+        WAIT1: begin
+            if(temp_done) begin
+                state_next = WAIT2;
+            end
+        end
+
+        WAIT2: begin
+            if(temp_done) begin
+                state_next = FILL_DATA_DEC;
+            end
+        end
+
+        FILL_DATA_DEC: begin
+            if(temp_done) begin
+                in_data_next = data_out;
+                state_next = SEND_DATA_DEC;
+            end
+        end
+        SEND_DATA_DEC: begin
+            if(temp_done) begin
+                data_in = inv_cipher_out_data_k1;
                 state_next = IDLE;
             end
         end
@@ -122,40 +147,36 @@ always @(*) begin
 end
 
 cipher  k1 (
-    .i_data(in_data[391-:128]),
+    .i_data(in_data_next[391-:128]),
     .expanded_key(selected_key),
     .NR(param/4 + 6),
     .o_data(cipher_out_data_k1)
      );
-cipher #(6,12) k2 (
-    .i_data(in_data[391-:128]),
-    .i_key(in_data[255-:192]),
-    .o_data(cipher_out_data_k2)
-     );
 
-inv_cipher #(4,10) ik1 (
-    .i_data(cipher_out_data_k1),
-    .i_key(in_data[255-:128]),
+inv_cipher k2 (
+    .i_data(in_data_next[391-:128]),
+    .expanded_key(selected_key),
+    .NR(param/4 + 6),
     .o_data(inv_cipher_out_data_k1)
      );
-inv_cipher #(6,12) ik2 (
-    .i_data(cipher_out_data_k2),
-    .i_key(in_data[255-:192]),
-    .o_data(inv_cipher_out_data_k2)
-     );
-     key_expansion #(.NK(4), .NR(10)) ke128 (
-    .i_cypher_key(in_data[255 -:128]),
+
+key_expansion #(.NK(4), .NR(10)) ke128 (
+    .i_cypher_key(in_data_next[255 -:128]),
     .o_expanded_key(o_expanded_key_1)
 );
-     key_expansion #(.NK(6), .NR(12)) ke128 (
-    .i_cypher_key(in_data[255 -:128]),
-    .o_expanded_key(o_expanded_key_2)
-);
-     key_expansion #(.NK(8), .NR(14)) ke128 (
-    .i_cypher_key(in_data[255 -:128]),
-    .o_expanded_key(o_expanded_key_3)
-);
+// key_expansion #(.NK(6), .NR(12)) ke192 (
+//     .i_cypher_key(in_data_next[255 -:192]),
+//     .o_expanded_key(o_expanded_key_2)
+// );
+// key_expansion #(.NK(8), .NR(14)) ke256 (
+//     .i_cypher_key(in_data_next[255 -:256]),
+//     .o_expanded_key(o_expanded_key_3)
+// );
+
+
+
+
 assign done = temp_done;
-assign data_in_w[383 -: 256] = data_in;
-assign param = in_data[263-:8];
+assign data_in_w[383 -: 128] = data_in;
+assign param = in_data_next[263-:8];
 endmodule

@@ -569,3 +569,34 @@ run
 # Finallyyyyyyyyyyyyyy
 # 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
 # 00112233445566778899aabbccddeeff
+# Compile of AES.v was successful with warnings.
+# Compile of test_wrapper2.v was successful with warnings.
+# 2 compiles, 0 failed with no errors.
+restart
+# ** Note: (vsim-12125) Error and warning message counts have been reset to '0' because of 'restart'.
+# Loading work.test_wrapper2
+# Loading work.master_full
+# Loading work.AES
+# Loading work.slave_full
+# Loading work.cipher
+# Loading work.key_expansion
+# Loading work.add_round_key
+# Loading work.sub_bytes
+# Loading work.SBox
+# Loading work.shift_rows
+# Loading work.inv_cipher
+# Loading work.inv_shift_rows
+# Loading work.inv_sub_bytes
+# Loading work.InvSBox
+# Loading work.mix_columns
+# Loading work.inv_mix_columns
+run
+# Finallyyyyyyyyyyyyyy
+# 69c4e0d86a7b0430d8cdb78070b4c55a00112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Finallyyyyyyyyyyyyyy
+# dda97ca4864cdfe06eaf70a0ec0d719100112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff
+# Finallyyyyyyyyyyyyyy
+# 8ea2b7ca516745bfeafc49904b49608900112233445566778899aabbccddeeff
+# 00112233445566778899aabbccddeeff

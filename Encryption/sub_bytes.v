@@ -1,4 +1,3 @@
-`include "sbox.v"
 
 module sub_bytes (
     input wire [127:0] i_initial_state,

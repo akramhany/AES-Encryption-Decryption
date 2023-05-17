@@ -1,6 +1,9 @@
 
 
-module test_wrapper2(input clk, input start_system, input reset, output reg led);
+module test_wrapper2(input wire clk, input wire reset, input wire start_system, output reg led);
+
+//input clk, input start_system, input reset, output reg led
+
 
 localparam PERIOD = 10;
 
@@ -75,8 +78,13 @@ reg [2:0] counter_2 = 0;
 
 always @(posedge clk) begin
 
+  if (test_result_recive[383 -: 128] == 128'hdda97ca4864cdfe06eaf70a0ec0d7191) begin
+    led = 1;
+  end
+
   if (reset) begin        
     wrapper_state   <= IDLE;
+	 led = 0;
   end
   else begin
     wrapper_state   <= wrapper_state_next;
@@ -87,6 +95,7 @@ always @(posedge clk) begin
   //TODO: put a condition to check if the start_system is 0 (make it asyncho)
 end
 
+reg [2:0] counter_3 = 0;
 
 
 always @ (*)  begin
@@ -122,8 +131,12 @@ case (wrapper_state)
 
         if (done) begin
           start = 1;
-          wrapper_state_next = REC; 
+          if (~counter_3) begin
+          wrapper_state_next = REC;
+          end
+          counter_3 = counter_3 - 1;
         end
+
     end
 
     REC: begin
@@ -137,22 +150,19 @@ case (wrapper_state)
         else if (counter_2 == 3'b010) begin
           wrapper_state_next = WAIT;
           counter_2 = 0;
+          counter_3 = 3'h100;
         end
     end
 
     CHECK: begin
         start = 0;
-        if (test_result_recive[383 -: 128] == enc_text && test_result_recive[255 -: 128] == plane_text) begin
-            led = 1;
-        end
-        else begin
-            led = 0;
-        end
            //TODO: delete this statement if you want the program to run normally
         wrapper_state_next = IDLE;
     end
 endcase
 end
+
+
 
 
 assign key_size = (counter == 2'b00) ? SIZE_128 : 

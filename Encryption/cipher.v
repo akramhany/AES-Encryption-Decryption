@@ -1,8 +1,4 @@
-`include "../key_expansion.v"
-`include "../add_round_key.v"
-`include "sub_bytes.v"
-`include "shift_rows.v"
-`include "mix_columns.v"
+
 module cipher (
     expanded_key,
     i_data,

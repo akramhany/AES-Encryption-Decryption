@@ -14,7 +14,7 @@
 `include "slave_full.v"
 
 module AES (
-    input reset,
+    input sync,
     input cs,          
     input clk,
     input sclk,             
@@ -58,7 +58,7 @@ localparam WAIT2            = 3'b110;
 
 
 slave_full enc_slave (
-   .reset(reset),
+   .reset(sync),
    .clk(clk),
    .cs(cs),
    .mosi(mosi),
@@ -70,7 +70,7 @@ slave_full enc_slave (
  );
 
 always@(posedge clk) begin
-    if(reset) begin
+    if(sync) begin
         in_data = 0;
         state_reg <= 2'b0;
 
@@ -113,41 +113,6 @@ always @(*) begin
                 state_next = IDLE;
             end
         end
-
-        // WAIT1: begin
-        //     if(temp_done) begin
-        //         state_next = WAIT2;
-        //     end
-        // end
-
-        // WAIT2: begin
-        //     if(temp_done) begin
-        //         state_next = FILL_DATA_DEC;
-        //     end
-        // end
-
-        // FILL_DATA_DEC: begin
-        //     if(temp_done) begin
-        //         in_data = data_out;
-        //         state_next = SEND_DATA_DEC;
-        //     end
-        // end
-        // SEND_DATA_DEC: begin
-        //     if(temp_done) begin
-        //         case(param)
-        //             8'd16: begin
-        //                 data_in = inv_cipher_out_data_k1;
-        //             end
-        //             8'd24: begin
-        //                 data_in = inv_cipher_out_data_k2;
-        //             end
-        //             8'd32: begin
-        //                 data_in = inv_cipher_out_data_k3;
-        //             end
-        //         endcase
-        //         state_next = IDLE;
-        //     end
-        // end
     endcase
 end
 

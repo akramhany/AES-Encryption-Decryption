@@ -10,7 +10,7 @@ z2
 cModel Technology
 dD:/Ahmed/CMP 26/2nd term/Logic/term Project/tests/my_addition
 vadd_round_key
-Z0 !s110 1684246511
+Z0 !s110 1684291310
 !i10b 1
 !s100 a1k6E`ZdbDFRKZT;^L_QJ2
 Z1 !s11b Dg1SIo80bB@j0V0VzS_@n1
@@ -20,13 +20,13 @@ Z3 dD:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption
 Z4 w1682684776
 8Decryption\..\add_round_key.v
 FDecryption\..\add_round_key.v
-!i122 8
+!i122 28
 L0 16 12
 Z5 OV;L;2020.1;71
 r1
 !s85 0
 31
-Z6 !s108 1684246511.000000
+Z6 !s108 1684291309.000000
 !s107 slave_full.v|Decryption\inv_mix_columns.v|Decryption\inv_shift_rows.v|Decryption\InvSBox.v|Decryption\inv_sub_bytes.v|Decryption\..\add_round_key.v|Decryption\..\key_expansion.v|Decryption/inv_cipher.v|Encryption\mix_columns.v|Encryption\shift_rows.v|Encryption\sbox.v|Encryption\sub_bytes.v|Encryption\..\add_round_key.v|Encryption\..\key_expansion.v|Encryption/cipher.v|AES.v|master_full.v|D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/test_wrapper2.v|
 Z7 !s90 -reportprogress|300|-work|work|-stats=none|D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/test_wrapper2.v|
 !i113 1
@@ -35,16 +35,16 @@ Z9 tCvgOpt 0
 vAES
 R0
 !i10b 1
-!s100 2AOf<E=n0Q^Wn:IK0h1a90
+!s100 ?>PWJJ^jmZK=X@;WU5Bl13
 R1
-IJjid[9UN=AiLRTC7YSgV_1
+ISQo3K@E8;S_Hf[:F74CcN1
 R2
 R3
-w1684246237
+w1684285588
 8AES.v
 FAES.v
-!i122 8
-L0 16 174
+!i122 28
+L0 16 139
 R5
 r1
 !s85 0
@@ -67,7 +67,7 @@ R3
 Z11 w1683975866
 8Encryption/cipher.v
 FEncryption/cipher.v
-!i122 8
+!i122 28
 L0 23 45
 R5
 r1
@@ -90,7 +90,7 @@ R3
 w1683981677
 8Decryption/inv_cipher.v
 FDecryption/inv_cipher.v
-!i122 8
+!i122 28
 L0 8 45
 R5
 r1
@@ -113,7 +113,7 @@ R3
 R4
 8Decryption\inv_mix_columns.v
 FDecryption\inv_mix_columns.v
-!i122 8
+!i122 28
 L0 12 41
 R5
 r1
@@ -136,7 +136,7 @@ R3
 R4
 8Decryption\inv_shift_rows.v
 FDecryption\inv_shift_rows.v
-!i122 8
+!i122 28
 L0 15 30
 R5
 r1
@@ -159,7 +159,7 @@ R3
 w1683189698
 8Decryption\inv_sub_bytes.v
 FDecryption\inv_sub_bytes.v
-!i122 8
+!i122 28
 Z12 L0 3 52
 R5
 r1
@@ -182,7 +182,7 @@ R3
 R11
 8Decryption\InvSBox.v
 FDecryption\InvSBox.v
-!i122 8
+!i122 28
 Z13 L0 1 279
 R5
 r1
@@ -206,7 +206,7 @@ R3
 w1683095198
 8Decryption\..\key_expansion.v
 FDecryption\..\key_expansion.v
-!i122 8
+!i122 28
 L0 15 384
 R5
 r1
@@ -219,17 +219,17 @@ R7
 R8
 R9
 vmaster_full
-R0
+Z14 !s110 1684291309
 !i10b 1
 !s100 ToeJ>GkV04AhY2EP_LE8>3
 R1
 IXENlcbHVnH7aB5an1moF<2
 R2
 R3
-Z14 w1684244227
+Z15 w1684244227
 8master_full.v
 Fmaster_full.v
-!i122 8
+!i122 28
 L0 14 146
 R5
 r1
@@ -242,7 +242,7 @@ R7
 R8
 R9
 vmix_columns
-R0
+R14
 !i10b 1
 !s100 7=7P@6A9Xi[29K26F`=Kc1
 R1
@@ -252,7 +252,7 @@ R3
 R4
 8Encryption\mix_columns.v
 FEncryption\mix_columns.v
-!i122 8
+!i122 28
 L0 12 29
 R5
 r1
@@ -265,7 +265,7 @@ R7
 R8
 R9
 vSBox
-R0
+R14
 !i10b 1
 !s100 eoTGMA<jG0BR8g8d:2O0R3
 R1
@@ -275,7 +275,7 @@ R3
 R4
 8Encryption\sbox.v
 FEncryption\sbox.v
-!i122 8
+!i122 28
 R13
 R5
 r1
@@ -289,7 +289,7 @@ R8
 R9
 n@s@box
 vshift_rows
-R0
+R14
 !i10b 1
 !s100 ODVRKk3154ZlP>L;AGeeT0
 R1
@@ -299,7 +299,7 @@ R3
 R4
 8Encryption\shift_rows.v
 FEncryption\shift_rows.v
-!i122 8
+!i122 28
 L0 15 31
 R5
 r1
@@ -319,10 +319,10 @@ R1
 IhXBd>=;dbB5QhFdR333512
 R2
 R3
-R14
+R15
 8slave_full.v
 Fslave_full.v
-!i122 8
+!i122 28
 L0 15 113
 R5
 r1
@@ -335,7 +335,7 @@ R7
 R8
 R9
 vsub_bytes
-R0
+R14
 !i10b 1
 !s100 K_RLOY>MoJ8iTBRhkMnG21
 R1
@@ -345,7 +345,7 @@ R3
 R4
 8Encryption\sub_bytes.v
 FEncryption\sub_bytes.v
-!i122 8
+!i122 28
 R12
 R5
 r1
@@ -360,16 +360,16 @@ R9
 vtest_wrapper2
 R0
 !i10b 1
-!s100 oMCCDaDam6DJZR_dfiDg_2
+!s100 n]6Io;jk`N9LQacU3=1Yz0
 R1
-IE3gZ>[8OlBK0VLOi<A;=U0
+I71R>O_h<`ETfGfeAIQFUV0
 R2
 R3
-w1684246503
+w1684291305
 8D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/test_wrapper2.v
 FD:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/test_wrapper2.v
-!i122 8
-L0 4 218
+!i122 28
+L0 4 185
 R5
 r1
 !s85 0

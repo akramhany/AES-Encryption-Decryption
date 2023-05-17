@@ -1,3 +1,9 @@
 // ignores verilog output files
 *.v.out
 *.vcd
+*.qdb
+*.mpf
+*.mti
+*.qpg
+*.qtl
+*.mpf

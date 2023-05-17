@@ -10,7 +10,6 @@
 `include "cipher.v"
 `timescale 1ns/1ps
 module tb_cipher();
-reg clk;
 reg [3:0]nr ;
 
 reg [1919:0] i_key;
@@ -38,6 +37,7 @@ initial begin
     expected_output = 128'h8ea2b7ca516745bfeafc49904b496089;
     #10;
 end
+//reg clk;
 always #5 clk = ~clk;
 
 always @(*) begin
@@ -45,7 +45,7 @@ always @(*) begin
 end
 
 initial begin
-    #1100;
+    #900;
     if (o_data == expected_output) begin
         $display("Test Passed!!!");
     end 

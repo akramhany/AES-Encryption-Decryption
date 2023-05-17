@@ -141,12 +141,16 @@ case (wrapper_state)
     CHECK: begin
         start = 0;
         if (test_result_recive[383 -: 128] == enc_text && test_result_recive[255 -: 128] == plane_text) begin
-            $display("Finallyyyyyyyyyyyyyy");
-            $display("%h",test_result_recive[383 -: 256]);
-            $display("%h",plane_text);
+            $display("Test Case %d:", counter);
+            $display("Ciphered TEXT:     %h", test_result_recive[383 -: 128]);
+            $display("Inv Ciphered TEXT: %h", test_result_recive[255 -: 128]);
+            $display("PLAIN TEXT:        %h", plane_text);
+            $display("KEY SIZE:          %d bytes", key_size);
+            $display("testcase PASSED");
+            $display("==================================================================");
         end
         else begin
-            $display("Kill me please");
+            $display("Test Case %d: FAILED", counter);
             $display("%d", $time);
         end
         wrapper_state_next = IDLE;

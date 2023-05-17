@@ -1,5 +1,7 @@
 {D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v} {2 {vlog -work work -stats=none {D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/AES.v}
 Model Technology ModelSim - Intel FPGA Edition vlog 2020.1 Compiler 2020.02 Feb 28 2020
+init_auxdbinfo(): INTERNAL ERROR: Cannot open page file "D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/work/_lib1_24.qpg" in read mode
+flat_compact(): DATABASE ERROR: cannot open auxiliary database at path=D:/Ahmed/CMP 26/2nd term/Logic/term Project/repo/AES-Encryption-Decryption/work (auxid=1, gen=24)
 -- Compiling module key_expansion
 -- Compiling module add_round_key
 -- Compiling module SBox
